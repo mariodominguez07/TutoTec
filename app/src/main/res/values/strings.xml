@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">TutoTec</string>
+    <string name="texto01">¡Bienvenido!</string>
+    <string name="texto02">¿Qué tipo de Jaguar eres?</string>
+    <string name="texto03">Registro de Jaguar</string>
+    <string name="texto04">Imagen:</string>
+    <string name="boton01">Alumno</string>
+    <string name="boton02">Tutor</string>
+    <string name="boton03">Olvide mi contraseña</string>
+    <string name="boton04">Ingresar</string>
+    <string name="boton05">Registrarme</string>
+    <string name="boton06">Elegir Archivo</string>
+    <string name="hint01">Número de Control</string>
+    <string name="hint02">Contraseña</string>
+    <string name="hint03">Correo Electronico</string>
+    <string name="hint04">Nombre</string>
+    <string name="hint05">Apellido Paterno</string>
+    <string name="hint06">Apellido Materno</string>
+    <string name="hint07">Carrera</string>
+    <string name="hint08">Grupo</string>
+    <string name="hint09">Academia</string>
+</resources>
