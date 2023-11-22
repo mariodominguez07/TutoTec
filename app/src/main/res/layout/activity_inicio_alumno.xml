@@ -8,19 +8,176 @@
     android:background="@color/white"
     tools:context=".InicioAlumno">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color7"
+            android:text="@string/app_name"
+            android:textSize="36sp"
+            android:textColor="@color/color8"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:layout_marginTop="80dp"
+            style="@style/fuente_Tutotec"/>
         
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/foto_alumno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/foto"
-            android:scaleX=".4"
-            android:scaleY=".4"
-            android:layout_marginTop="-320dp"
-            android:layout_marginBottom="-300dp"/>
-        
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:layout_marginTop="-330dp"
+            android:layout_marginBottom="-330dp"/>
+
+        <TextView
+            android:id="@+id/nombreCompleto_Alumno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/texto05"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:textSize="38sp"
+            android:textColor="@color/color7"
+            android:layout_marginBottom="20dp"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto06"
+                    android:textStyle="bold"
+                    android:textColor="@color/color5"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/noControl_carnet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto07"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/color7"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto08"
+                    android:textStyle="bold"
+                    android:textColor="@color/color5"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/carrera_carnet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto09"
+                    android:textColor="@color/color7"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto10"
+                    android:textStyle="bold"
+                    android:textColor="@color/color5"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/grupo_carnet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto11"
+                    android:textColor="@color/color7"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto12"
+                    android:textStyle="bold"
+                    android:textColor="@color/color5"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/tutor_carnet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto13"
+                    android:textColor="@color/color7"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </TableRow>
+        </TableLayout>
+
+       <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="7dp"
+           android:background="@color/color3"
+           android:layout_marginTop="15dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/jaguar"
+            android:scaleY=".3"
+            android:scaleX=".3"
+            android:layout_marginTop="-70dp"
+            android:layout_marginBottom="-80dp"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/menu_inicioA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_navigation_menu" />
+
     </LinearLayout>
+
 </ScrollView>
