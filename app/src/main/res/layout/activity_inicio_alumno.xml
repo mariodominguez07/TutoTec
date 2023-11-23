@@ -12,27 +12,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </TableRow>
-        </TableLayout>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_carnet"
+                android:backgroundTint="@color/color5"
+                android:visibility="invisible"/>
 
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_actividades"
+                android:backgroundTint="@color/color5"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:id="@+id/btneditar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_editar"
+                android:backgroundTint="@color/white"/>
+        </TableRow>
+    </TableLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/foto_alumno"
@@ -161,7 +172,49 @@
         </TableLayout>
 
 
-
     </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color5">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/btncarnet_menu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_carnet"
+                android:backgroundTint="@color/color5"/>
+
+            <ImageButton
+                android:id="@+id/btnactividades_menu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_actividades"
+                android:backgroundTint="@color/color5"/>
+
+            <ImageButton
+                android:id="@+id/btnsolicitudes_menu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_solicitudes"
+                android:backgroundTint="@color/color5"/>
+
+            <ImageButton
+                android:id="@+id/btncerrarsesion_menu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_cerrar_sesion"
+                android:backgroundTint="@color/color5"/>
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>

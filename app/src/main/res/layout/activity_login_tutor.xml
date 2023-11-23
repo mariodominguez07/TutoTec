@@ -37,7 +37,7 @@
             android:layout_marginBottom="-230dp"
             android:scaleX=".8"
             android:scaleY=".8"
-            android:src="@drawable/TutoTecLogo" />
+            android:src="@drawable/TutoLogo" />
 
         <TextView
             android:layout_width="match_parent"
