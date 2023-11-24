@@ -77,6 +77,7 @@ class LoginTutor : AppCompatActivity() {
                                 )
                             }
                             val intent = Intent(this, InicioTutor::class.java)
+                            intent.putExtra("tutor",tutor)
                             startActivity(intent)
                         }
                     }else{

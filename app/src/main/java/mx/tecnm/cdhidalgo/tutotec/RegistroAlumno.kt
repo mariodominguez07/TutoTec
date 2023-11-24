@@ -6,10 +6,16 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +34,7 @@ class RegistroAlumno : AppCompatActivity() {
     private lateinit var nombre: TextInputLayout
     private lateinit var apePaterno: TextInputLayout
     private lateinit var apeMaterno: TextInputLayout
-    private lateinit var carrera: TextInputLayout
+    private lateinit var carrera: Spinner
     private lateinit var grupo: TextInputLayout
     private lateinit var correo: TextInputLayout
     private lateinit var pass: TextInputLayout
@@ -37,6 +43,7 @@ class RegistroAlumno : AppCompatActivity() {
     private val storageReference = FirebaseStorage.getInstance().reference
     private var selectedImageUri: Uri? = null
 
+    var _carrera = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro_alumno)
@@ -51,7 +58,7 @@ class RegistroAlumno : AppCompatActivity() {
         nombre = findViewById(R.id.nombre)
         apePaterno = findViewById(R.id.ape_paterno)
         apeMaterno = findViewById(R.id.ape_materno)
-        carrera = findViewById(R.id.carrera)
+        carrera = findViewById(R.id.carrera_registro)
         grupo = findViewById(R.id.grupo)
         correo = findViewById(R.id.email_registro)
         pass = findViewById(R.id.password_registro)
@@ -64,10 +71,32 @@ class RegistroAlumno : AppCompatActivity() {
             startActivityForResult(intent, 1)
         }
 
+        val arreglo_carreras = resources.getStringArray(R.array.carreras)
+        val adaptadorCarreras = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            arreglo_carreras
+        )
+        carrera.adapter = adaptadorCarreras
+
+        carrera.onItemSelectedListener = object : OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                _carrera = carrera.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
+
         btnRegistrame.setOnClickListener {
             val email = correo.editText?.text
             val psw = pass.editText?.text
-            val numC = noControl.editText?.text
 
             // Asegúrate de que se haya seleccionado una imagen
             if (selectedImageUri != null) {
@@ -86,7 +115,7 @@ class RegistroAlumno : AppCompatActivity() {
                                 """
                                 Número de Control: ${noControl.editText?.text} 
                                 Nombre: ${nombre.editText?.text} ${apePaterno.editText?.text} ${apeMaterno.editText?.text}
-                                Carrera: ${carrera.editText?.text}
+                                Carrera: ${_carrera}
                                 Grupo: ${grupo.editText?.text}
                                 Correo: ${correo.editText?.text}
                                 Contraseña ${pass.editText?.text}
@@ -96,29 +125,36 @@ class RegistroAlumno : AppCompatActivity() {
                                 if (email.toString().isNotEmpty() && psw.toString().isNotEmpty()) {
                                     val alumno = hashMapOf(
                                         "correo" to email.toString(),
-                                        "no_control" to numC.toString(),
+                                        "nocontrol" to noControl.editText?.text.toString(),
                                         "nombre" to nombre.editText?.text.toString(),
                                         "apellido_pa" to apePaterno.editText?.text.toString(),
                                         "apellido_ma" to apeMaterno.editText?.text.toString(),
-                                        "carrera" to carrera.editText?.text.toString(),
+                                        "carrera" to _carrera,
                                         "grupo" to grupo.editText?.text.toString(),
                                         "foto" to downloadUrl
                                     )
+
                                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(
                                         email.toString(), psw.toString()
-                                    ).addOnCompleteListener {
-                                        if (it.isSuccessful) {
-                                            val intent =
-                                                Intent(this, LoginAlumno::class.java).apply {
-                                                    baseDeDatos.collection("alumnos")
-                                                        .document(numC.toString()).set(alumno)
+                                    ).addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            // Usuario creado exitosamente, ahora guarda la información en Firestore
+                                            val user = task.result?.user
+                                            baseDeDatos.collection("alumnos").document(email.toString()).set(alumno)
+                                                .addOnSuccessListener {
+                                                    val intent = Intent(this, LoginAlumno::class.java)
+                                                    startActivity(intent)
                                                 }
-                                            startActivity(intent)
+                                                .addOnFailureListener {
+                                                    Toast.makeText(this,"Error al guardar la informacion",Toast.LENGTH_SHORT).show()
+                                                }
                                         } else {
-                                            notificacion()
+                                            // Manejar errores al crear el usuario
+                                            Toast.makeText(this,"Error al crear usuario",Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 }
+
 
                             }
                             confirmarDialogo.setNegativeButton("Editar") { confirmarDialogo, which ->

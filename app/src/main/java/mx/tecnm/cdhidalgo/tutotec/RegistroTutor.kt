@@ -6,9 +6,14 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +30,7 @@ class RegistroTutor : AppCompatActivity() {
     private lateinit var nombre: TextInputLayout
     private lateinit var apePaterno: TextInputLayout
     private lateinit var apeMaterno: TextInputLayout
-    private lateinit var academia: TextInputLayout
+    private lateinit var academia: Spinner
     private lateinit var grupo: TextInputLayout
     private lateinit var correo: TextInputLayout
     private lateinit var pass: TextInputLayout
@@ -34,6 +39,7 @@ class RegistroTutor : AppCompatActivity() {
     private val storageReference = FirebaseStorage.getInstance().reference
     private var selectedImageUri: Uri? = null
 
+    var _academia = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro_tutor)
@@ -47,7 +53,7 @@ class RegistroTutor : AppCompatActivity() {
         nombre = findViewById(R.id.nombre_tutor)
         apePaterno = findViewById(R.id.ape_paterno_tutor)
         apeMaterno = findViewById(R.id.ape_materno_tutor)
-        academia = findViewById(R.id.academia)
+        academia = findViewById(R.id.academia_registro)
         grupo = findViewById(R.id.grupo_tutor)
         correo = findViewById(R.id.email_registro_tutor)
         pass = findViewById(R.id.password_registro_tutor)
@@ -57,6 +63,29 @@ class RegistroTutor : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, 1)
+        }
+
+        val arreglo_academias = resources.getStringArray(R.array.carreras)
+        val adaptadorAcademias = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            arreglo_academias
+        )
+        academia.adapter = adaptadorAcademias
+
+        academia.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                _academia = academia.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
         }
 
         btnRegistrame.setOnClickListener {
@@ -78,7 +107,7 @@ class RegistroTutor : AppCompatActivity() {
                             confirmarDialogo.setMessage(
                                 """
                                 Nombre: ${nombre.editText?.text} ${apePaterno.editText?.text} ${apeMaterno.editText?.text}
-                                Academia: ${academia.editText?.text}
+                                Academia: ${_academia}
                                 Grupo: ${grupo.editText?.text}
                                 Correo: ${correo.editText?.text}
                                 Contraseña ${pass.editText?.text}
@@ -91,22 +120,27 @@ class RegistroTutor : AppCompatActivity() {
                                         "nombre" to nombre.editText?.text.toString(),
                                         "apellido_pa" to apePaterno.editText?.text.toString(),
                                         "apellido_ma" to apeMaterno.editText?.text.toString(),
-                                        "academia" to academia.editText?.text.toString(),
+                                        "academia" to _academia,
                                         "grupo" to grupo.editText?.text.toString(),
                                         "foto" to downloadUrl
                                     )
                                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(
                                         email.toString(), psw.toString()
-                                    ).addOnCompleteListener {
-                                        if (it.isSuccessful) {
-                                            val intent =
-                                                Intent(this, LoginTutor::class.java).apply {
-                                                    baseDeDatos.collection("tutores")
-                                                        .document(email.toString()).set(tutor)
+                                    ).addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            // Usuario creado exitosamente, ahora guarda la información en Firestore
+                                            val user = task.result?.user
+                                            baseDeDatos.collection("tutores").document(email.toString()).set(tutor)
+                                                .addOnSuccessListener {
+                                                    val intent = Intent(this, LoginTutor::class.java)
+                                                    startActivity(intent)
                                                 }
-                                            startActivity(intent)
+                                                .addOnFailureListener {
+                                                    Toast.makeText(this,"Error al guardar la informacion", Toast.LENGTH_SHORT).show()
+                                                }
                                         } else {
-                                            notificacion()
+                                            // Manejar errores al crear el usuario
+                                            Toast.makeText(this,"Error al crear usuario", Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 }

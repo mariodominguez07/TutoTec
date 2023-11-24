@@ -22,10 +22,20 @@
     <string name="hint01">Número de Control</string>
     <string name="hint02">Contraseña</string>
     <string name="hint03">Correo Electronico</string>
-    <string name="hint04">Nombre</string>
+    <string name="hint04">Nombre(s)</string>
     <string name="hint05">Apellido Paterno</string>
     <string name="hint06">Apellido Materno</string>
     <string name="hint07">Carrera</string>
     <string name="hint08">Grupo</string>
     <string name="hint09">Academia</string>
+    <string-array name="carreras">
+        <item>Carrera</item>
+        <item>Ingeniería en Sistemas Computacionales</item>
+        <item>Ingeniería en Tecnologías de la Información y Comunicaciones</item>
+        <item>Ingeniería en Gestión Empresarial</item>
+        <item>Ingeniería en Biotecnología</item>
+        <item>Ingeniería en Mecatronica</item>
+        <item>Ingeniería Industrial</item>
+        <item>Ingeniería en Nanotecnología</item>
+    </string-array>
 </resources>

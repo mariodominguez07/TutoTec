@@ -53,7 +53,7 @@ class InicioAlumno : AppCompatActivity() {
         if (alumno != null){
             Glide.with(this).load(alumno.foto).circleCrop().into(foto)
             nombreC.text = "${alumno.nombre} ${alumno.apellido_pa} ${alumno.apellido_ma}"
-            noControl.text = alumno.no_control
+            noControl.text = alumno.nocontrol
             carrera.text = alumno.carrera
             grupo.text = alumno.grupo
         }

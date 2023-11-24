@@ -67,14 +67,14 @@ class LoginAlumno : AppCompatActivity() {
                         baseDeDatos.collection("alumnos").whereEqualTo("correo",email.toString()).get().addOnSuccessListener {documentos->
                             for(documento in documentos){
                                 alumno = Alumno(
-                                    "${documento.data["correo"]}",
-                                    "${documento.data["no_control"]}",
-                                    "${documento.data["nombre"]}",
-                                    "${documento.data["apellido_pa"]}",
-                                    "${documento.data["apellido_ma"]}",
-                                    "${documento.data["carrera"]}",
-                                    "${documento.data["grupo"]}",
-                                    "${documento.data["foto"]}"
+                                    "${documento.data.get("correo")}",
+                                    "${documento.data.get("nocontrol")}",
+                                    "${documento.data.get("nombre")}",
+                                    "${documento.data.get("apellido_pa")}",
+                                    "${documento.data.get("apellido_ma")}",
+                                    "${documento.data.get("carrera")}",
+                                    "${documento.data.get("grupo")}",
+                                    "${documento.data.get("foto")}"
                                 )
                             }
                             val intent = Intent(this, InicioAlumno::class.java)
