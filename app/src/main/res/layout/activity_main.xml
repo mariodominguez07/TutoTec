@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="@drawable/fondo_index"
+    android:background="@drawable/fondo_alumnos"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -22,7 +22,12 @@
             android:scaleX=".9"
             android:scaleY=".9"
             android:layout_marginTop="-180dp"
-            android:layout_marginBottom="-100dp"/>
+            android:layout_marginBottom="-180dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/jaguareres"/>
 
 
         <Button

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="@drawable/fondo_carnet_tutor"
+    android:background="@drawable/fondo_carnet_alumno_tutotec"
     tools:context=".InicioTutor">
 
     <TableLayout
@@ -41,7 +41,7 @@
                 android:visibility="invisible"/>
 
             <ImageButton
-                android:id="@+id/btnmenu"
+                android:id="@+id/btnmenu_tutor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -80,7 +80,8 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp">
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +102,7 @@
                     android:layout_weight="1"
                     android:text="@string/texto15"
                     android:textColor="@color/color7"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </TableRow>
 
@@ -110,8 +111,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/texto16"
                     android:textStyle="bold"
                     android:textColor="@color/color5"
@@ -124,8 +126,7 @@
                     android:layout_weight="1"
                     android:text="@string/texto17"
                     android:textColor="@color/color7"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </TableRow>
 
@@ -149,11 +150,22 @@
                     android:layout_weight="1"
                     android:text="@string/texto11"
                     android:textColor="@color/color7"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </TableRow>
 
         </TableLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/color7"
+            android:layout_marginBottom="10dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_jaguar"/>
 
 
     </LinearLayout>

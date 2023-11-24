@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -18,6 +19,7 @@ import mx.tecnm.cdhidalgo.tutotec.dataClass.Tutor
 class InicioAlumno : AppCompatActivity() {
 
     private lateinit var editar:ImageButton
+    private lateinit var menu : ImageButton
     private lateinit var carnet:ImageButton
     private lateinit var actividades:ImageButton
     private lateinit var solicitudes:ImageButton
@@ -43,6 +45,7 @@ class InicioAlumno : AppCompatActivity() {
         val baseDeDatos = Firebase.firestore
 
         editar = findViewById(R.id.btneditar)
+        menu = findViewById(R.id.btnmenu_alumno)
         /*carnet = findViewById(R.id.btncarnet_menu)
         actividades = findViewById(R.id.btnactividades_menu)
         solicitudes = findViewById(R.id.btnsolicitudes_menu)
@@ -85,6 +88,11 @@ class InicioAlumno : AppCompatActivity() {
             grupo.text = alumno.grupo
         }
 
+        menu.setOnClickListener {view->
+            val popupMenu = PopupMenu(this, view)
+
+            popupMenu.menuInflater.inflate()
+        }
        /* editar.setOnClickListener {  }
 
         carnet.setOnClickListener {  }

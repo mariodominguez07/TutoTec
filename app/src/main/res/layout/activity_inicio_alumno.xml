@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    android:background="@drawable/fondo_carnet_alumno"
+    android:background="@drawable/fondo_carnet_tutor_tutotec"
     tools:context=".InicioAlumno">
 
     <TableLayout
@@ -41,12 +41,13 @@
                 android:visibility="invisible"/>
 
             <ImageButton
-                android:id="@+id/btnmenu"
+                android:id="@+id/btnmenu_alumno"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/img_menu"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+                android:contentDescription="@string/menu_button_description"/>
         </TableRow>
     </TableLayout>
 
@@ -80,7 +81,8 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +103,7 @@
                     android:layout_weight="1"
                     android:text="@string/texto07"
                     android:textColor="@color/color7"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </TableRow>
 
@@ -110,8 +112,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/texto08"
                     android:textStyle="bold"
                     android:textColor="@color/color5"
@@ -124,8 +127,7 @@
                     android:layout_weight="1"
                     android:text="@string/texto09"
                     android:textColor="@color/color7"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </TableRow>
 
@@ -149,7 +151,7 @@
                     android:layout_weight="1"
                     android:text="@string/texto11"
                     android:textColor="@color/color7"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </TableRow>
 
@@ -173,11 +175,21 @@
                     android:layout_weight="1"
                     android:text="@string/texto13"
                     android:textColor="@color/color7"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </TableRow>
         </TableLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/color7"
+            android:layout_marginBottom="10dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_jaguar"/>
 
     </LinearLayout>
 
