@@ -42,4 +42,5 @@
         <item>Ingeniería Industrial</item>
         <item>Ingeniería en Nanotecnología</item>
     </string-array>
+    <string name="menu_button_description">Abrir menú</string>
 </resources>

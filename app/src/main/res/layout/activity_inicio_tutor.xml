@@ -4,46 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="40dp"
-    android:background="@color/white"
+    android:padding="20dp"
+    android:background="@drawable/fondo_carnet_tutor"
     tools:context=".InicioTutor">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/btneditar_tutor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_editar"
+                android:backgroundTint="@color/white"/>
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_actividades"
+                android:backgroundTint="@color/color5"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_actividades"
+                android:backgroundTint="@color/color5"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:id="@+id/btnmenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/img_menu"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@string/menu_button_description"/>
+        </TableRow>
+    </TableLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/img_carnet"
-                    android:backgroundTint="@color/color5"
-                    android:visibility="invisible"/>
-
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/img_actividades"
-                    android:backgroundTint="@color/color5"
-                    android:visibility="invisible"/>
-
-                <ImageButton
-                    android:id="@+id/btneditar_tutor"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/img_editar"
-                    android:backgroundTint="@color/white"/>
-            </TableRow>
-        </TableLayout>
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/foto_tutor"
@@ -52,8 +64,8 @@
             android:src="@drawable/foto"
             android:scaleX=".5"
             android:scaleY=".5"
-            android:layout_marginTop="-330dp"
-            android:layout_marginBottom="-330dp"/>
+            android:layout_marginTop="-250dp"
+            android:layout_marginBottom="-300dp"/>
 
         <TextView
             android:id="@+id/nombreCompleto_tutor"
@@ -64,7 +76,7 @@
             android:textAlignment="center"
             android:textSize="30sp"
             android:textColor="@color/color8"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="40dp"/>
 
         <TableLayout
             android:layout_width="match_parent"
@@ -146,47 +158,6 @@
 
     </LinearLayout>
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color5">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageButton
-                android:id="@+id/btncarnet_menu_tutor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/img_carnet"
-                android:backgroundTint="@color/color5"/>
-
-            <ImageButton
-                android:id="@+id/btnactividades_menu_tutor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/img_actividades"
-                android:backgroundTint="@color/color5"/>
-
-            <ImageButton
-                android:id="@+id/btnsolicitudes_menu_tutor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/img_solicitudes"
-                android:backgroundTint="@color/color5"/>
-
-            <ImageButton
-                android:id="@+id/btncerrarsesion_menu_tutor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/img_cerrar_sesion"
-                android:backgroundTint="@color/color5"/>
-        </TableRow>
-    </TableLayout>
 
 </RelativeLayout>

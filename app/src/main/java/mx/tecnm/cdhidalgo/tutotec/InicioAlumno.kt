@@ -43,10 +43,10 @@ class InicioAlumno : AppCompatActivity() {
         val baseDeDatos = Firebase.firestore
 
         editar = findViewById(R.id.btneditar)
-        carnet = findViewById(R.id.btncarnet_menu)
+        /*carnet = findViewById(R.id.btncarnet_menu)
         actividades = findViewById(R.id.btnactividades_menu)
         solicitudes = findViewById(R.id.btnsolicitudes_menu)
-        cerrarSesion = findViewById(R.id.btncerrarsesion_menu)
+        cerrarSesion = findViewById(R.id.btncerrarsesion_menu)*/
 
         foto = findViewById(R.id.foto_alumno)
         nombreC = findViewById(R.id.nombreCompleto_Alumno)
@@ -55,32 +55,37 @@ class InicioAlumno : AppCompatActivity() {
         carrera = findViewById(R.id.carrera_carnet)
         tutor = findViewById(R.id.tutor_carnet)
 
-        baseDeDatos.collection("tutores")
-            .whereEqualTo("grupo",alumno.grupo)
-            .get()
-            .addOnSuccessListener {result->
-                for (document in result){
-                    val tutor = document.toObject(Tutor::class.java)
-                    nomT = "${tutor.nombre} ${tutor.apellido_pa} ${tutor.apellido_ma}"
-                }
-
-            }
-            .addOnFailureListener{
-                nomT = "No se encontro tutor"
-            }
 
         val alumno = intent.getParcelableExtra<Alumno>("alumno")
 
         if (alumno != null){
+            baseDeDatos.collection("tutores")
+                .whereEqualTo("grupo",alumno.grupo)
+                .get()
+                .addOnSuccessListener {result->
+                    for (document in result){
+                        val nomtutor = document.toObject(Tutor::class.java)
+                        nomT = "${nomtutor.nombre} ${nomtutor.apellido_pa} ${nomtutor.apellido_ma}"
+
+                        tutor.text = nomT
+
+                    }
+
+                }
+                .addOnFailureListener{
+                    nomT = "No se encontro tutor"
+
+                    tutor.text = nomT
+
+                }
             Glide.with(this).load(alumno.foto).circleCrop().into(foto)
             nombreC.text = "${alumno.nombre} ${alumno.apellido_pa} ${alumno.apellido_ma}"
             noControl.text = alumno.nocontrol
             carrera.text = alumno.carrera
             grupo.text = alumno.grupo
-            tutor.text = nomT
         }
 
-        editar.setOnClickListener {  }
+       /* editar.setOnClickListener {  }
 
         carnet.setOnClickListener {  }
 
@@ -93,6 +98,6 @@ class InicioAlumno : AppCompatActivity() {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
-        }
+        }*/
     }
 }

@@ -33,10 +33,10 @@ class InicioTutor : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         editar = findViewById(R.id.btneditar_tutor)
-        carnet = findViewById(R.id.btncarnet_menu_tutor)
+        /*carnet = findViewById(R.id.btncarnet_menu_tutor)
         actividades = findViewById(R.id.btnactividades_menu_tutor)
         solicitudes = findViewById(R.id.btnsolicitudes_menu_tutor)
-        cerrarSesion = findViewById(R.id.btncerrarsesion_menu_tutor)
+        cerrarSesion = findViewById(R.id.btncerrarsesion_menu_tutor)*/
 
         foto = findViewById(R.id.foto_tutor)
         nombreC = findViewById(R.id.nombreCompleto_tutor)
@@ -52,7 +52,7 @@ class InicioTutor : AppCompatActivity() {
             academia.text = tutor.academia
             grupo.text = tutor.grupo
         }
-        editar.setOnClickListener {  }
+       /* editar.setOnClickListener {  }
 
         carnet.setOnClickListener {  }
 
@@ -65,6 +65,6 @@ class InicioTutor : AppCompatActivity() {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
-        }
+        }*/
     }
 }
