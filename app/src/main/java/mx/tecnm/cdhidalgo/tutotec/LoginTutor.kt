@@ -67,13 +67,13 @@ class LoginTutor : AppCompatActivity() {
                         baseDeDatos.collection("tutores").whereEqualTo("correo",email.toString()).get().addOnSuccessListener {documentos->
                             for(documento in documentos){
                                 tutor = Tutor(
-                                    "${documento.data.get("foto")}",
                                     "${documento.data.get("correo")}",
                                     "${documento.data.get("nombre")}",
                                     "${documento.data.get("apellido_pa")}",
                                     "${documento.data.get("apellido_ma")}",
                                     "${documento.data.get("academia")}",
                                     "${documento.data.get("grupo")}",
+                                    "${documento.data.get("foto")}"
                                 )
                             }
                             val intent = Intent(this, InicioTutor::class.java)

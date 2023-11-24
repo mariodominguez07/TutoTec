@@ -9,8 +9,11 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 import mx.tecnm.cdhidalgo.tutotec.dataClass.Alumno
+import mx.tecnm.cdhidalgo.tutotec.dataClass.Tutor
 
 class InicioAlumno : AppCompatActivity() {
 
@@ -29,11 +32,15 @@ class InicioAlumno : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+    var nomT = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio_alumno)
 
         auth = FirebaseAuth.getInstance()
+
+        val baseDeDatos = Firebase.firestore
 
         editar = findViewById(R.id.btneditar)
         carnet = findViewById(R.id.btncarnet_menu)
@@ -48,6 +55,20 @@ class InicioAlumno : AppCompatActivity() {
         carrera = findViewById(R.id.carrera_carnet)
         tutor = findViewById(R.id.tutor_carnet)
 
+        baseDeDatos.collection("tutores")
+            .whereEqualTo("grupo",alumno.grupo)
+            .get()
+            .addOnSuccessListener {result->
+                for (document in result){
+                    val tutor = document.toObject(Tutor::class.java)
+                    nomT = "${tutor.nombre} ${tutor.apellido_pa} ${tutor.apellido_ma}"
+                }
+
+            }
+            .addOnFailureListener{
+                nomT = "No se encontro tutor"
+            }
+
         val alumno = intent.getParcelableExtra<Alumno>("alumno")
 
         if (alumno != null){
@@ -56,6 +77,7 @@ class InicioAlumno : AppCompatActivity() {
             noControl.text = alumno.nocontrol
             carrera.text = alumno.carrera
             grupo.text = alumno.grupo
+            tutor.text = nomT
         }
 
         editar.setOnClickListener {  }

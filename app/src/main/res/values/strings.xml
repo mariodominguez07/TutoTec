@@ -13,6 +13,10 @@
     <string name="texto11">Grupo</string>
     <string name="texto12">Tutor:</string>
     <string name="texto13">Tutor</string>
+    <string name="texto14">Correo</string>
+    <string name="texto15">Correo:</string>
+    <string name="texto16">Academia:</string>
+    <string name="texto17">Academia</string>
     <string name="boton01">Alumno</string>
     <string name="boton02">Tutor</string>
     <string name="boton03">Olvide mi contraseña</string>
