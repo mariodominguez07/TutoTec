@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/carnet_menu"
+        android:title="Carnet"
+        android:icon="@drawable/img_carnet"/>
+    <item
+        android:id="@+id/inicio_menu"
+        android:title="Inicio"
+        android:icon="@drawable/img_inicio"/>
+    <item
+        android:id="@+id/cerrarsesion_menu"
+        android:title="Cerrar Sesion"
+        android:icon="@drawable/img_cerrar_sesion"/>
 
 </menu>

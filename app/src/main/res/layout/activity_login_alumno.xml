@@ -57,12 +57,12 @@
             app:hintTextColor="@color/color3"
             android:layout_marginBottom="15dp"
             app:boxStrokeColor="@color/color2"
-            android:textColorHint="@color/color3"
-            android:background="@color/color2">
+            android:textColorHint="@color/color3">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/color2"
                 android:inputType="textEmailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -77,12 +77,12 @@
             android:layout_marginBottom="15dp"
             app:boxStrokeColor="@color/color2"
             android:textColorHint="@color/color3"
-            android:background="@color/color2"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/color2"
                 android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>

@@ -3,6 +3,7 @@ package mx.tecnm.cdhidalgo.tutotec
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
@@ -20,10 +21,6 @@ class InicioAlumno : AppCompatActivity() {
 
     private lateinit var editar:ImageButton
     private lateinit var menu : ImageButton
-    private lateinit var carnet:ImageButton
-    private lateinit var actividades:ImageButton
-    private lateinit var solicitudes:ImageButton
-    private lateinit var cerrarSesion:ImageButton
 
     private lateinit var foto:CircleImageView
     private lateinit var nombreC:TextView
@@ -35,6 +32,7 @@ class InicioAlumno : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     var nomT = ""
+    val alumno = intent.getParcelableExtra<Alumno>("alumno")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +44,7 @@ class InicioAlumno : AppCompatActivity() {
 
         editar = findViewById(R.id.btneditar)
         menu = findViewById(R.id.btnmenu_alumno)
-        /*carnet = findViewById(R.id.btncarnet_menu)
-        actividades = findViewById(R.id.btnactividades_menu)
-        solicitudes = findViewById(R.id.btnsolicitudes_menu)
-        cerrarSesion = findViewById(R.id.btncerrarsesion_menu)*/
+
 
         foto = findViewById(R.id.foto_alumno)
         nombreC = findViewById(R.id.nombreCompleto_Alumno)
@@ -58,8 +53,6 @@ class InicioAlumno : AppCompatActivity() {
         carrera = findViewById(R.id.carrera_carnet)
         tutor = findViewById(R.id.tutor_carnet)
 
-
-        val alumno = intent.getParcelableExtra<Alumno>("alumno")
 
         if (alumno != null){
             baseDeDatos.collection("tutores")
@@ -81,31 +74,47 @@ class InicioAlumno : AppCompatActivity() {
                     tutor.text = nomT
 
                 }
-            Glide.with(this).load(alumno.foto).circleCrop().into(foto)
-            nombreC.text = "${alumno.nombre} ${alumno.apellido_pa} ${alumno.apellido_ma}"
-            noControl.text = alumno.nocontrol
-            carrera.text = alumno.carrera
-            grupo.text = alumno.grupo
+            Glide.with(this).load(alumno!!.foto).circleCrop().into(foto)
+            nombreC.text = "${alumno!!.nombre} ${alumno!!.apellido_pa} ${alumno!!.apellido_ma}"
+            noControl.text = alumno!!.nocontrol
+            carrera.text = alumno!!.carrera
+            grupo.text = alumno!!.grupo
         }
 
         menu.setOnClickListener {view->
             val popupMenu = PopupMenu(this, view)
 
-            popupMenu.menuInflater.inflate()
+            popupMenu.menuInflater.inflate(R.menu.menu_alumno, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener { item -> onMenuItemClick(item) }
+
+            popupMenu.show()
         }
        /* editar.setOnClickListener {  }
 
-        carnet.setOnClickListener {  }
+        */
+    }
 
-        actividades.setOnClickListener {  }
+    private fun onMenuItemClick(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.carnet_menu -> {
+                return true
+            }
+            R.id.inicio_menu -> {
+                val intent = Intent(this,HomeAlumno::class.java)
+                intent.putExtra("alumno",alumno)
+                startActivity(intent)
+                return true
+            }
+            R.id.cerrarsesion_menu -> {
+                auth.signOut()
+                val intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+                finish()
+                return true
+            }
 
-        solicitudes.setOnClickListener {  }
-
-        cerrarSesion.setOnClickListener {
-            auth.signOut()
-            val intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }*/
+            else -> return false
+        }
     }
 }
