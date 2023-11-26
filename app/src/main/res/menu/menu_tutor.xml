@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/carnet_menu"
+        android:id="@+id/carnet_menu_tutor"
         android:title="Carnet"
         android:icon="@drawable/img_carnet"/>
     <item
-        android:id="@+id/inicio_menu"
+        android:id="@+id/inicio_menu_tutor"
         android:title="Inicio"
         android:icon="@drawable/img_inicio"/>
     <item
-        android:id="@+id/asistencias_menu"
-        android:title="Asistencias"
-        android:icon="@drawable/img_asistencias"/>
+        android:id="@+id/actividades_menu_tutor"
+        android:title="Actividades"
+        android:icon="@drawable/img_actividades"/>
     <item
-        android:id="@+id/solicitudes_menu"
+        android:id="@+id/solicitudes_menu_tutor"
         android:title="Solicitudes"
         android:icon="@drawable/img_solicitudes"/>
     <item
-        android:id="@+id/cerrarsesion_menu"
+        android:id="@+id/cerrarsesion_menu_tutor"
         android:title="Cerrar Sesion"
         android:icon="@drawable/img_cerrar_sesion"/>
-
 </menu>

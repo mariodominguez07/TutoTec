@@ -7,9 +7,7 @@ import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -74,11 +72,11 @@ class InicioAlumno : AppCompatActivity() {
                     tutor.text = nomT
 
                 }
-            Glide.with(this).load(alumno!!.foto).circleCrop().into(foto)
-            nombreC.text = "${alumno!!.nombre} ${alumno!!.apellido_pa} ${alumno!!.apellido_ma}"
-            noControl.text = alumno!!.nocontrol
-            carrera.text = alumno!!.carrera
-            grupo.text = alumno!!.grupo
+            Glide.with(this).load(alumno.foto).circleCrop().into(foto)
+            nombreC.text = "${alumno.nombre} ${alumno.apellido_pa} ${alumno.apellido_ma}"
+            noControl.text = alumno.nocontrol
+            carrera.text = alumno.carrera
+            grupo.text = alumno.grupo
         }
 
         menu.setOnClickListener {view->
@@ -104,6 +102,12 @@ class InicioAlumno : AppCompatActivity() {
                 val intent = Intent(this,HomeAlumno::class.java)
                 intent.putExtra("alumno",alumno)
                 startActivity(intent)
+                return true
+            }
+            R.id.asistencias_menu -> {
+                return true
+            }
+            R.id.solicitudes_menu -> {
                 return true
             }
             R.id.cerrarsesion_menu -> {
