@@ -15,6 +15,27 @@
         android:theme="@style/Theme.TutoTec"
         tools:targetApi="31">
         <activity
+            android:name=".SolicitudesTutor"
+            android:exported="false" />
+        <activity
+            android:name=".SolicitudesAlumno"
+            android:exported="false" />
+        <activity
+            android:name=".AgregarSolicitudes"
+            android:exported="false" />
+        <activity
+            android:name=".AsistenciasAlumno"
+            android:exported="false" />
+        <activity
+            android:name=".DetalleActividad"
+            android:exported="false" />
+        <activity
+            android:name=".AgregarActividad"
+            android:exported="false" />
+        <activity
+            android:name=".ActividadesTutor"
+            android:exported="false" />
+        <activity
             android:name=".HomeTutor"
             android:exported="false" />
         <activity

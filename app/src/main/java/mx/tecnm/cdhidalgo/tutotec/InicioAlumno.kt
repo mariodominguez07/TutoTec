@@ -30,7 +30,6 @@ class InicioAlumno : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     var nomT = ""
-    val alumno = intent.getParcelableExtra<Alumno>("alumno")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +50,7 @@ class InicioAlumno : AppCompatActivity() {
         carrera = findViewById(R.id.carrera_carnet)
         tutor = findViewById(R.id.tutor_carnet)
 
+        val alumno = intent.getParcelableExtra<Alumno>("alumno")
 
         if (alumno != null){
             baseDeDatos.collection("tutores")
@@ -88,9 +88,7 @@ class InicioAlumno : AppCompatActivity() {
 
             popupMenu.show()
         }
-       /* editar.setOnClickListener {  }
 
-        */
     }
 
     private fun onMenuItemClick(item: MenuItem): Boolean {
@@ -105,9 +103,15 @@ class InicioAlumno : AppCompatActivity() {
                 return true
             }
             R.id.asistencias_menu -> {
+                val intent = Intent(this,AsistenciasAlumno::class.java)
+                intent.putExtra("alumno",alumno)
+                startActivity(intent)
                 return true
             }
             R.id.solicitudes_menu -> {
+                val intent = Intent(this,SolicitudesAlumno::class.java)
+                intent.putExtra("alumno",alumno)
+                startActivity(intent)
                 return true
             }
             R.id.cerrarsesion_menu -> {

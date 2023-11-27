@@ -79,6 +79,7 @@
                     android:layout_weight=".5"
                     android:visibility="invisible"/>
                 <Spinner
+                    android:id="@+id/sp_actividades_tutor"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -100,7 +101,7 @@
                     android:layout_weight="1"
                     android:visibility="invisible"/>
                 <Button
-                    android:id="@+id/btn_detalles_actividad"
+                    android:id="@+id/btn_detalles_actividad_tutor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/texto24"
@@ -145,6 +146,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color2">
                 <TextView
+                    android:id="@+id/txtActividadFecha_tutor"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -156,6 +158,7 @@
 
         </TableLayout>
         <TableLayout
+            android:id="@+id/tablaAlumnos_HomeTutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-20dp"

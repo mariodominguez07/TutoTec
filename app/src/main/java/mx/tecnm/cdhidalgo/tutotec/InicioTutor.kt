@@ -25,7 +25,7 @@ class InicioTutor : AppCompatActivity() {
     private lateinit var academia: TextView
 
     private lateinit var auth: FirebaseAuth
-    val tutor = intent.getParcelableExtra<Tutor>("tutor")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +41,8 @@ class InicioTutor : AppCompatActivity() {
         correo = findViewById(R.id.correo_tutor)
         grupo = findViewById(R.id.grupo_carnet_tutor)
         academia = findViewById(R.id.academia_tutor)
+
+        val tutor = intent.getParcelableExtra<Tutor>("tutor")
 
         if (tutor != null){
             Glide.with(this).load(tutor.foto).circleCrop().into(foto)
@@ -74,9 +76,15 @@ class InicioTutor : AppCompatActivity() {
                 return true
             }
             R.id.actividades_menu_tutor -> {
+                val intent = Intent(this,ActividadesTutor::class.java)
+                intent.putExtra("tutor",tutor)
+                startActivity(intent)
                 return true
             }
             R.id.solicitudes_menu_tutor -> {
+                val intent = Intent(this,SolicitudesTutor::class.java)
+                intent.putExtra("tutor",tutor)
+                startActivity(intent)
                 return true
             }
             R.id.cerrarsesion_menu_tutor -> {

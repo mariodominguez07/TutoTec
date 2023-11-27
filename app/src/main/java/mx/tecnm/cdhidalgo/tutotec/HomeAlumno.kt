@@ -25,7 +25,6 @@ class HomeAlumno : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-    val alumno = intent.getParcelableExtra<Alumno>("alumno")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_alumno)
@@ -41,6 +40,9 @@ class HomeAlumno : AppCompatActivity() {
         btnSolicitud_Canalizacion = findViewById(R.id.btnSolicitud_canalizacion)
         btnSolicitud_Asesoria = findViewById(R.id.btnSolicitud_asesoria)
         btnSolicitud_Platica = findViewById(R.id.btnSolicitud_platica)
+
+        val alumno = intent.getParcelableExtra<Alumno>("alumno")
+
 
         btnDetalleActividad.setOnClickListener {  }
 
@@ -73,9 +75,15 @@ class HomeAlumno : AppCompatActivity() {
                 return true
             }
             R.id.asistencias_menu -> {
+                val intent = Intent(this,AsistenciasAlumno::class.java)
+                intent.putExtra("alumno",alumno)
+                startActivity(intent)
                 return true
             }
             R.id.solicitudes_menu -> {
+                val intent = Intent(this,SolicitudesAlumno::class.java)
+                intent.putExtra("alumno",alumno)
+                startActivity(intent)
                 return true
             }
             R.id.cerrarsesion_menu -> {
