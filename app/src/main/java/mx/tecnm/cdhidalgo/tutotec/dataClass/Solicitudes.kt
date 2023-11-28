@@ -9,5 +9,5 @@ data class Solicitudes(
     val estatus: String
 ){
     // Constructor sin argumentos
-    constructor() : this("", "", "", "", "", "" )
+    constructor() : this("", "", "", "", "", "")
 }

@@ -22,7 +22,8 @@
             android:scaleX=".9"
             android:scaleY=".9"
             android:layout_marginTop="-180dp"
-            android:layout_marginBottom="-180dp"/>
+            android:layout_marginBottom="-180dp"
+            android:transitionName="logo_trans"/>
 
         <ImageView
             android:layout_width="match_parent"
