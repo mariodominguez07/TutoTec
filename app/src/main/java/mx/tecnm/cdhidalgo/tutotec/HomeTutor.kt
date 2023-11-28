@@ -92,6 +92,7 @@ class HomeTutor : AppCompatActivity() {
             tvNumeroControl.textAlignment = View.TEXT_ALIGNMENT_CENTER
             tvNumeroControl.setTypeface(null,Typeface.BOLD)
             tvNumeroControl.isAllCaps = true
+            tvNumeroControl.setTextSize(11f)
             tvNumeroControl.layoutParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,.5f)
             fila.addView(tvNumeroControl)
 

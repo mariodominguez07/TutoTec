@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
     android:background="@drawable/fondo_tutores"
-    android:orientation="vertical"
     tools:context=".HomeTutor">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -124,8 +127,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:padding="10dp">
+            android:layout_marginTop="40dp">
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,8 +163,6 @@
             android:id="@+id/tablaAlumnos_HomeTutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-20dp"
-            android:padding="10dp"
             android:stretchColumns="*">
             <TableRow
                 android:layout_width="match_parent"
@@ -200,5 +200,6 @@
         </TableLayout>
 
     </LinearLayout>
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
