@@ -7,13 +7,18 @@ import java.sql.Date
 data class Actividades(
     val titulo: String? = null,
     val descripcion: String?= null,
-    val fechayHora:String?= null,
+    val lugar: String?= null,
+    val fecha:String?= null,
+    val hora:String?= null,
     val grupo: String?= null,
     val tutor: String?= null,
     val evidencia: String?= null
 ) : Parcelable {
-    constructor() : this(null, null, null, null, null, null)
+    constructor() : this(null, null, null, null, null, null, null, null)
+
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -26,7 +31,9 @@ data class Actividades(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(titulo)
         parcel.writeString(descripcion)
-        parcel.writeString(fechayHora)
+        parcel.writeString(lugar)
+        parcel.writeString(fecha)
+        parcel.writeString(hora)
         parcel.writeString(grupo)
         parcel.writeString(tutor)
         parcel.writeString(evidencia)

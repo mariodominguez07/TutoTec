@@ -4,9 +4,13 @@ import java.sql.Date
 
 data class Asistencias(
     val actividad: String,
-    val fechayHora: Date,
+    val fecha: String,
+    val hora: String,
     val grupo: String,
-    val nomAlumno: String,
+    val nomalumno: String,
     val nocontrol: String,
     val asistio: String
-)
+){
+    // Constructor sin argumentos
+    constructor() : this("", "", "", "", "", "", "")
+}

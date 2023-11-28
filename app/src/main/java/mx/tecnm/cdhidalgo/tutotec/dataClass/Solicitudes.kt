@@ -7,4 +7,7 @@ data class Solicitudes(
     val nocontrol: String,
     val nombre: String,
     val estatus: String
-)
+){
+    // Constructor sin argumentos
+    constructor() : this("", "", "", "", "", "" )
+}

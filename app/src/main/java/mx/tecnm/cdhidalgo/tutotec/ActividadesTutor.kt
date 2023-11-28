@@ -38,7 +38,7 @@ class ActividadesTutor : AppCompatActivity() {
         val baseDeDatos = Firebase.firestore
 
         menu = findViewById(R.id.btnmenu_tutor_actividades)
-        btnAgregarActividad = findViewById(R.id.btn_agregar_actividad_tutor)
+        btnAgregarActividad = findViewById(R.id.btn_agregar_actividad_tutor_home)
 
         val tutor = intent.getParcelableExtra<Tutor>("tutor")
 
@@ -80,8 +80,6 @@ class ActividadesTutor : AppCompatActivity() {
 
         val baseDeDatos = Firebase.firestore
 
-
-
         for (actividad in listaActividades){
             val fila = TableRow(this)
             val tvActividad = TextView(this)
@@ -95,7 +93,7 @@ class ActividadesTutor : AppCompatActivity() {
             fila.addView(tvActividad)
 
             val tvFecha = TextView(this)
-            tvFecha.text = "${actividad.fechayHora}"
+            tvFecha.text = "${actividad.fecha}"
             tvFecha.setBackgroundResource(R.drawable.border )
             tvFecha.textAlignment = View.TEXT_ALIGNMENT_CENTER
             tvFecha.setTextColor(R.color.black)
@@ -160,7 +158,7 @@ class ActividadesTutor : AppCompatActivity() {
             btnEliminar.layoutParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,.5f)
             btnEliminar.setOnClickListener {
                 baseDeDatos.collection("actividades")
-                    .document(actividad.titulo)
+                    .document(actividad.titulo!!)
                     .delete()
                     .addOnSuccessListener {
                         Toast.makeText(this,"Actividad Eliminada correctamente", Toast.LENGTH_SHORT).show()

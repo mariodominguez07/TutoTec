@@ -104,7 +104,7 @@
                     android:layout_weight="1"
                     android:visibility="invisible"/>
                 <Button
-                    android:id="@+id/btn_detalles_actividad_tutor"
+                    android:id="@+id/btn_subir_evidencia_tutor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/texto24"
@@ -155,7 +155,7 @@
                     android:text="@string/texto26"
                     android:textColor="@color/color9"
                     android:textAlignment="center"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
             </TableRow>
 
         </TableLayout>
