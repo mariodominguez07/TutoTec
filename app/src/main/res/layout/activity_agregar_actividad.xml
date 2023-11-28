@@ -84,8 +84,7 @@
                 android:textAlignment="center"
                 android:textSize="38sp"
                 android:textStyle="bold"
-                android:background="@color/color8"
-                android:textColor="@color/white"
+                android:textColor="@color/color7"
                 android:layout_marginBottom="30dp"/>
 
 
