@@ -15,6 +15,9 @@
         android:theme="@style/Theme.TutoTec"
         tools:targetApi="31">
         <activity
+            android:name=".EditarPerfil"
+            android:exported="false" />
+        <activity
             android:name=".Splash"
             android:exported="true">
             <intent-filter>
@@ -70,8 +73,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 
 </manifest>

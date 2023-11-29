@@ -46,8 +46,6 @@ class SolicitudesTutor : AppCompatActivity() {
                 for (documento in result){
                     val solicitud = documento.toObject(Solicitudes::class.java)
 
-                    Toast.makeText(this,"${solicitud.tema}", Toast.LENGTH_SHORT).show()
-
                     listaSolicitudes.add(solicitud)
                 }
 

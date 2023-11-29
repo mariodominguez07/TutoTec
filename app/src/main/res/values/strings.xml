@@ -41,6 +41,9 @@
     <string name="texto39">Rechazar asistencia</string>
     <string name="texto40">Asistencias</string>
     <string name="texto41">Asistio</string>
+    <string name="texto42">Descripcion</string>
+    <string name="texto43">Lugar</string>
+    <string name="texto44">Fecha y hora</string>
     <string name="boton01">Alumno</string>
     <string name="boton02">Tutor</string>
     <string name="boton03">Olvide mi contraseña</string>

@@ -47,14 +47,15 @@ class SolicitudesAlumno : AppCompatActivity(), AdaptadorSolicitudesAlumno.Solici
 
                     listaSolicitudes.add(solicitud)
                 }
+                rvSolicitudes.layoutManager = LinearLayoutManager(this)
+                adaptadorSolicitudes = AdaptadorSolicitudesAlumno(listaSolicitudes, this)
+                rvSolicitudes.adapter = adaptadorSolicitudes
 
             }
             .addOnFailureListener{
                 Toast.makeText(this,"No se encontraron Solicitudes", Toast.LENGTH_SHORT).show()
             }
-        rvSolicitudes.layoutManager = LinearLayoutManager(this)
-        adaptadorSolicitudes = AdaptadorSolicitudesAlumno(listaSolicitudes, this)
-        rvSolicitudes.adapter = adaptadorSolicitudes
+
 
         menu.setOnClickListener {view->
             val popupMenu = PopupMenu(this, view)

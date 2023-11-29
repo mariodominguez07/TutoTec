@@ -47,15 +47,14 @@
                     android:textSize="10sp"
                     android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnconfirmar_alumno_soli"
+                <ImageButton
+                    android:id="@+id/confirmar_soli_alumno"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:backgroundTint="@drawable/border"
-                    android:text="@string/boton09"
-                    android:textSize="9sp"
-                    />
+                    android:background="@drawable/border"
+                    android:src="@drawable/img_si_asistencia" />
+
 
 
             </TableRow>

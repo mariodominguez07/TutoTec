@@ -47,14 +47,15 @@ class AsistenciasAlumno : AppCompatActivity() {
 
                     listaAsistencias.add(asistencia)
                 }
+                rvAsistencias.layoutManager = LinearLayoutManager(this)
+                adaptadorAsistencias = AdaptadorAsistenciaAlumno(listaAsistencias)
+                rvAsistencias.adapter = adaptadorAsistencias
 
             }
             .addOnFailureListener{
                 Toast.makeText(this,"No se encontraron Asistencias", Toast.LENGTH_SHORT).show()
             }
-        rvAsistencias.layoutManager = LinearLayoutManager(this)
-        adaptadorAsistencias = AdaptadorAsistenciaAlumno(listaAsistencias)
-        rvAsistencias.adapter = adaptadorAsistencias
+
 
         menu.setOnClickListener {view->
             val popupMenu = PopupMenu(this, view)

@@ -7,7 +7,7 @@
     app:cardBackgroundColor="@color/color2">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_margin="2dp">
 
         <TableLayout

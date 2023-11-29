@@ -89,6 +89,9 @@ class InicioAlumno : AppCompatActivity() {
             popupMenu.show()
         }
 
+        editar.setOnClickListener {
+
+        }
     }
 
     private fun onMenuItemClick(item: MenuItem): Boolean {

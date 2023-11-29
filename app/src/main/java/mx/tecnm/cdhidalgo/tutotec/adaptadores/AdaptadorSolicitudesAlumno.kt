@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
@@ -42,7 +43,7 @@ class AdaptadorSolicitudesAlumno (private val listaSolicitudes: List<Solicitudes
     inner class SolicitudViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         private val tema: TextView = itemView.findViewById(R.id.tema_alumno_soli)
         private val estatus: TextView = itemView.findViewById(R.id.estatus_alumno_soli)
-        private val btnConfirmar: Button = itemView.findViewById(R.id.btnconfirmar_alumno_soli)
+        private val btnConfirmar: ImageButton = itemView.findViewById(R.id.confirmar_soli_alumno)
 
         fun bind(solicitud: Solicitudes) {
             tema.text = solicitud.tema
