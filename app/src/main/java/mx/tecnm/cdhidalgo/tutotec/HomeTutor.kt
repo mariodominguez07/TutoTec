@@ -38,7 +38,6 @@ class HomeTutor : AppCompatActivity() {
     private lateinit var spActividades:Spinner
     private lateinit var btnSubirEvidencia:Button
     private lateinit var txtActividadFecha:TextView
-    private lateinit var tablaAlumnos:TableLayout
     private lateinit var rvAlumnos:RecyclerView
     private lateinit var adaptadorAlumnos : AdaptadorAlumnosActividad
 
@@ -79,7 +78,7 @@ class HomeTutor : AppCompatActivity() {
         val nomT = "${tutor?.nombre} ${tutor?.apellido_pa} ${tutor?.apellido_ma}"
 
         val listaActividades = mutableListOf<Actividades>()
-        baseDeDatos.collection("actividades").whereEqualTo("grupo", mx.tecnm.cdhidalgo.tutotec.tutor.grupo)
+        baseDeDatos.collection("actividades").whereEqualTo("grupo", tutor!!.grupo)
             .whereEqualTo("tutor",nomT)
             .get().addOnSuccessListener { result ->
 

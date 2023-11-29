@@ -4,26 +4,34 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.PopupMenu
+import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import mx.tecnm.cdhidalgo.tutotec.dataClass.Actividades
 import mx.tecnm.cdhidalgo.tutotec.dataClass.Alumno
 
 class HomeAlumno : AppCompatActivity() {
 
     private lateinit var menu : ImageButton
 
-    private lateinit var txtActividad:TextView
+    private lateinit var spActividades: Spinner
     private lateinit var btnDetalleActividad: Button
     private lateinit var btnSolicitud_Canalizacion:ImageButton
     private lateinit var btnSolicitud_Asesoria:ImageButton
     private lateinit var btnSolicitud_Platica:ImageButton
 
     private lateinit var auth: FirebaseAuth
+
+    var _actividad : Actividades = Actividades()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +43,7 @@ class HomeAlumno : AppCompatActivity() {
 
         menu = findViewById(R.id.btnmenu_alumno_home)
 
-        txtActividad = findViewById(R.id.txt_actividad)
+        spActividades = findViewById(R.id.sp_actividades_alumno)
         btnDetalleActividad = findViewById(R.id.btn_detalles_actividad)
         btnSolicitud_Canalizacion = findViewById(R.id.btnSolicitud_canalizacion)
         btnSolicitud_Asesoria = findViewById(R.id.btnSolicitud_asesoria)
@@ -43,14 +51,75 @@ class HomeAlumno : AppCompatActivity() {
 
         val alumno = intent.getParcelableExtra<Alumno>("alumno")
 
+        val listaActividades = mutableListOf<Actividades>()
+        baseDeDatos.collection("actividades").whereEqualTo("grupo", alumno!!.grupo)
+            .get().addOnSuccessListener { result ->
 
-        btnDetalleActividad.setOnClickListener {  }
+                for (documento in result){
+                    val actividad = documento.toObject(Actividades::class.java)
 
-        btnSolicitud_Canalizacion.setOnClickListener {  }
+                    listaActividades.add(actividad)
+                }
+                val nombresActividades = listaActividades.map { it.titulo }
+                val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, nombresActividades)
+                spActividades.adapter = adapter
 
-        btnSolicitud_Asesoria.setOnClickListener {  }
+                spActividades.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val actividadSeleccionada = listaActividades[position]
+                        _actividad = actividadSeleccionada
+                    }
 
-        btnSolicitud_Platica.setOnClickListener {  }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+
+                }
+
+            }
+            .addOnFailureListener{
+                Toast.makeText(this,"No se encontraron Actividades", Toast.LENGTH_SHORT).show()
+            }
+
+
+        btnDetalleActividad.setOnClickListener {
+            val intent = Intent(this,DetalleActividad::class.java)
+            intent.putExtra("alumno", alumno)
+            intent.putExtra("actividad",_actividad)
+            startActivity(intent)
+        }
+
+        btnSolicitud_Canalizacion.setOnClickListener {
+            val tipoSoli = "Canalización"
+            val intent = Intent(this,AgregarSolicitudes::class.java)
+            intent.putExtra("alumno", alumno)
+            intent.putExtra("tipoSoli",tipoSoli)
+            startActivity(intent)
+        }
+
+        btnSolicitud_Asesoria.setOnClickListener {
+            val tipoSoli = "Asesoria"
+            val areaSel = "Ciencias Básicas"
+            val intent = Intent(this,AgregarSolicitudes::class.java)
+            intent.putExtra("alumno", alumno)
+            intent.putExtra("tipoSoli",tipoSoli)
+            intent.putExtra("areaSel",areaSel)
+            startActivity(intent)
+        }
+
+        btnSolicitud_Platica.setOnClickListener {
+            val tipoSoli = "Plática"
+            val areaSel = "Tutorias"
+            val intent = Intent(this,AgregarSolicitudes::class.java)
+            intent.putExtra("alumno", alumno)
+            intent.putExtra("tipoSoli",tipoSoli)
+            intent.putExtra("areaSel",areaSel)
+            startActivity(intent)
+        }
 
         menu.setOnClickListener {view->
             val popupMenu = PopupMenu(this, view)

@@ -84,6 +84,13 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="@color/color7"/>
+                <Spinner
+                    android:id="@+id/sp_actividades_alumno"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/color5"
+                    android:textAlignment="center"/>
             </TableRow>
 
             <TableRow

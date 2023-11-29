@@ -17,7 +17,7 @@
     <string name="texto15">Correo:</string>
     <string name="texto16">Academia:</string>
     <string name="texto17">Academia</string>
-    <string name="texto18">Actividad...</string>
+    <string name="texto18">Actividad</string>
     <string name="texto19">Detalles de la actividad</string>
     <string name="texto20">¿En qué te puede ayudar tu tutor?</string>
     <string name="texto21">Canalización</string>
@@ -34,6 +34,13 @@
     <string name="texto32">Alumnos que no asistieron</string>
     <string name="texto33">Eliminar Actividad</string>
     <string name="texto34">Agregar Actividad</string>
+    <string name="texto35">Elegir Actividad</string>
+    <string name="texto36">Agregar Solicitud</string>
+    <string name="texto37">Solicitudes</string>
+    <string name="texto38">Estatus</string>
+    <string name="texto39">Rechazar asistencia</string>
+    <string name="texto40">Asistencias</string>
+    <string name="texto41">Asistio</string>
     <string name="boton01">Alumno</string>
     <string name="boton02">Tutor</string>
     <string name="boton03">Olvide mi contraseña</string>
@@ -41,6 +48,9 @@
     <string name="boton05">Registrarme</string>
     <string name="boton06">Elegir Archivo</string>
     <string name="boton07">Agregar Actividad</string>
+    <string name="boton08">Agregar Solicitud</string>
+    <string name="boton09">Confirmar</string>
+    <string name="boton10">Rechazar</string>
     <string name="hint01">Número de Control</string>
     <string name="hint02">Contraseña</string>
     <string name="hint03">Correo Electronico</string>
@@ -55,6 +65,9 @@
     <string name="hint12">Fecha</string>
     <string name="hint13">Hora</string>
     <string name="hint14">Ubicación</string>
+    <string name="hint15">Tipo de solicitud</string>
+    <string name="hint16">Tema</string>
+    <string name="hint17">Área</string>
     <string-array name="carreras">
         <item>Carrera</item>
         <item>Ingeniería en Sistemas Computacionales</item>
@@ -64,6 +77,19 @@
         <item>Ingeniería en Mecatronica</item>
         <item>Ingeniería Industrial</item>
         <item>Ingeniería en Nanotecnología</item>
+    </string-array>
+    <string-array name="areas">
+        <item>Área</item>
+        <item>Psicología</item>
+        <item>Salud</item>
+        <item>Adicciones</item>
+        <item>Beca Alimenticia</item>
+        <item>Beca Manutención</item>
+        <item>Beca Transporte</item>
+        <item>Aptitudes Sobresalientes</item>
+        <item>Procesos Administrativos</item>
+        <item>Ciencias Básicas</item>
+        <item>Tutorias</item>
     </string-array>
     <string name="menu_button_description">Abrir menú</string>
 </resources>

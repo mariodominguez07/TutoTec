@@ -22,53 +22,49 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/nocontrol_alumno_actividades"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:background="@drawable/border"
-                    android:gravity="center"
-                    android:text="@string/texto07"
-                    android:textAlignment="center"
-                    android:textColor="@color/color3"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/nombre_alumno_actividades"
+                    android:id="@+id/actividad_alumno_asis"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/border"
-
                     android:gravity="center"
-                    android:text="@string/texto05"
+                    android:text="@string/texto29"
                     android:textAlignment="center"
                     android:textColor="@color/color3"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
-                <ImageButton
-                    android:id="@+id/siasistio_alumno_actividades"
+                <TextView
+                    android:id="@+id/fecha_alumno_asis"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".5"
+                    android:layout_weight="1"
                     android:background="@drawable/border"
-                    android:src="@drawable/img_si_asistencia" />
+                    android:gravity="center"
+                    android:text="@string/texto30"
+                    android:textAlignment="center"
+                    android:textColor="@color/color3"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
 
-                <ImageButton
-                    android:id="@+id/noasistio_alumno_actividades"
+                <TextView
+                    android:id="@+id/asistencia_alumno_asis"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".5"
+                    android:layout_weight="1"
                     android:background="@drawable/border"
-                    android:src="@drawable/img_no_asistencia" />
+                    android:gravity="center"
+                    android:text="@string/texto41"
+                    android:textAlignment="center"
+                    android:textColor="@color/color3"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
 
             </TableRow>
         </TableLayout>
 
 
     </androidx.cardview.widget.CardView>
-
 
 </androidx.cardview.widget.CardView>
