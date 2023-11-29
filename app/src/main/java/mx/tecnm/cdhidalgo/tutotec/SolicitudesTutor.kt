@@ -46,22 +46,25 @@ class SolicitudesTutor : AppCompatActivity() {
                 for (documento in result){
                     val solicitud = documento.toObject(Solicitudes::class.java)
 
+                    Toast.makeText(this,"${solicitud.tema}", Toast.LENGTH_SHORT).show()
+
                     listaSolicitudes.add(solicitud)
                 }
+
+                rvSolicitudes.layoutManager = LinearLayoutManager(this)
+                val adaptadorSolicitudes = AdaptadorSolicitudesTutor(listaSolicitudes) { solicitud, action ->
+                    when (action) {
+                        "confirmar asistencia" -> mostrarDialogoAsistencia(solicitud)
+                        "confirmar falta" -> mostrarDialogoFalta(solicitud)
+                    }
+                }
+                rvSolicitudes.adapter = adaptadorSolicitudes
 
             }
             .addOnFailureListener{
                 Toast.makeText(this,"No se encontraron Solicitudes", Toast.LENGTH_SHORT).show()
             }
-        rvSolicitudes.layoutManager = LinearLayoutManager(this)
-        val adaptadorSolicitudes = AdaptadorSolicitudesTutor(listaSolicitudes) { solicitud, action ->
-            when (action) {
-                "confirmar asistencia" -> mostrarDialogoAsistencia(solicitud)
-                "confirmar falta" -> mostrarDialogoFalta(solicitud)
-            }
-        }
 
-        rvSolicitudes.adapter = adaptadorSolicitudes
 
         menu.setOnClickListener {view->
             val popupMenu = PopupMenu(this, view)
