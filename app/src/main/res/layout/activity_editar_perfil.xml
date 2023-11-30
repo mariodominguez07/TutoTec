@@ -4,6 +4,201 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/fondo_alumnos"
     tools:context=".EditarPerfil">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/btn_regresar_editar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_regresar"
+                        android:layout_gravity="start"
+                        android:scaleX=".9"
+                        android:scaleY=".9"
+                        android:background="@color/white"
+                        app:tint="@color/color7" />
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:backgroundTint="@color/color5"
+                        android:visibility="invisible"/>
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/tuto_logo"
+                        android:scaleX=".8"
+                        android:scaleY=".8"
+                        android:backgroundTint="@color/white"
+                        android:layout_marginTop="-320dp"/>
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:backgroundTint="@color/color5"
+                        android:visibility="invisible"/>
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_menu"
+                        android:visibility="invisible"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="-310dp"
+            android:padding="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/texto45"
+                android:textAlignment="center"
+                android:textSize="38sp"
+                android:textStyle="bold"
+                android:textColor="@color/color7"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginBottom="30dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/hint04"
+                app:hintTextColor="@color/color3"
+                android:layout_marginBottom="15dp"
+                app:boxStrokeColor="@color/color1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nombre_Editar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color2"
+                    android:inputType="text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/hint05"
+                app:hintTextColor="@color/color3"
+                android:layout_marginBottom="15dp"
+                app:boxStrokeColor="@color/color1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/apePaterno_Editar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color2"
+                    android:inputType="text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/hint06"
+                app:hintTextColor="@color/color3"
+                android:layout_marginBottom="15dp"
+                app:boxStrokeColor="@color/color1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/apeMaterno_editar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color2"
+                    android:inputType="text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/hint08"
+                app:hintTextColor="@color/color3"
+                android:layout_marginBottom="15dp"
+                app:boxStrokeColor="@color/color1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/grupo_editar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color2"
+                    android:inputType="text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/carrera_Editar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/hint17"
+                app:hintTextColor="@color/color3"
+                android:layout_marginBottom="15dp"
+                app:boxStrokeColor="@color/color1"
+                android:background="@color/color2"
+                android:entries="@array/carreras"/>
+
+            <Button
+                android:id="@+id/btn_editar_perfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/texto45"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:drawableRight="@drawable/img_editar"
+                android:drawableTint="@color/white"
+                android:backgroundTint="@color/color7"/>
+
+            <Button
+                android:id="@+id/btn_eliminar_usuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/boton11"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:drawableRight="@drawable/img_editar"
+                android:drawableTint="@color/white"
+                android:backgroundTint="@color/colorRojo"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </ScrollView>

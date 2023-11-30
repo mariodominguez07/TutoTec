@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="40dp"
-    android:background="@color/white"
+    android:padding="20dp"
+    android:background="@drawable/fondo_inicio_sesion_tutor"
     android:orientation="vertical"
     tools:context=".LoginTutor">
 
@@ -26,7 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/img_regresar"
-                    android:background="@color/white"/>
+                    android:background="@color/color2"/>
             </TableRow>
         </TableLayout>
 
@@ -38,9 +38,15 @@
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/color4"
-            android:layout_marginBottom="50dp"/>
+            android:layout_marginBottom="140dp"/>
+    </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+    <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_tutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,11 +54,12 @@
             android:hint="@string/hint03"
             app:hintTextColor="@color/color3"
             android:layout_marginBottom="15dp"
-            app:boxStrokeColor="@color/color1">
+            app:boxStrokeColor="@color/color2">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/color2"
                 android:inputType="textEmailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -70,6 +77,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/color2"
                 android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -86,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/boton03"
                 android:textAllCaps="false"
-                android:textColor="@color/color4"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="MissingConstraints" />
@@ -97,10 +105,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/boton04"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/color1"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/color6"
+                android:backgroundTint="@color/white"
                 app:layout_constraintTop_toBottomOf="@id/btnOlvidar_Tutor"
                 tools:ignore="MissingConstraints" />
 
@@ -111,8 +120,8 @@
             android:layout_height="wrap_content"
             android:text="@string/boton05"
             android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
