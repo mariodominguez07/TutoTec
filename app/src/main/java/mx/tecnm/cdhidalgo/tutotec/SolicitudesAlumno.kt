@@ -102,6 +102,22 @@ class SolicitudesAlumno : AppCompatActivity(), AdaptadorSolicitudesAlumno.Solici
                             documentReference.update(actualizar)
                                 .addOnSuccessListener {
                                     Toast.makeText(this, "Asistencia Confirmada", Toast.LENGTH_SHORT).show()
+                                    val listaSolicitudes = mutableListOf<Solicitudes>()
+                                    baseDeDatos.collection("solicitudes").whereEqualTo("nocontrol", alumno?.nocontrol)
+                                        .get().addOnSuccessListener { result ->
+                                            for (documento in result){
+                                                val solicitud = documento.toObject(Solicitudes::class.java)
+
+                                                listaSolicitudes.add(solicitud)
+                                            }
+                                            rvSolicitudes.layoutManager = LinearLayoutManager(this)
+                                            adaptadorSolicitudes = AdaptadorSolicitudesAlumno(listaSolicitudes, this)
+                                            rvSolicitudes.adapter = adaptadorSolicitudes
+
+                                        }
+                                        .addOnFailureListener{
+                                            Toast.makeText(this,"No se encontraron Solicitudes", Toast.LENGTH_SHORT).show()
+                                        }
                                 }
                                 .addOnFailureListener {
                                     Toast.makeText(this, "La Asistencia no se confirmó", Toast.LENGTH_SHORT).show()
