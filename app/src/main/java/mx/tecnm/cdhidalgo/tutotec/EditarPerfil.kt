@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import mx.tecnm.cdhidalgo.tutotec.dataClass.Alumno
 import mx.tecnm.cdhidalgo.tutotec.dataClass.Tutor
 
@@ -196,36 +197,62 @@ class EditarPerfil : AppCompatActivity() {
         btnEliminarPerfil.setOnClickListener {
             if (alumno != null && tutor ==null){
                 val confirmarDialogo = AlertDialog.Builder(this)
-                confirmarDialogo.setTitle("Eliminar Perfil")
+                confirmarDialogo.setTitle("Eliminar Usuario")
                 confirmarDialogo.setMessage(
                     """
-                   ¿Estas seguro de eliminar el perfil?
+                   ¿Estas seguro de eliminar el usuario?
                 """.trimIndent()
                 )
-                confirmarDialogo.setPositiveButton("Confirmar"){ confirmarDialogo,which->
+                confirmarDialogo.setPositiveButton("Confirmar") { confirmarDialogo, which ->
                     baseDeDatos.collection("alumnos")
                         .whereEqualTo("nocontrol", alumno.nocontrol)
                         .get()
-                        .addOnSuccessListener {documents ->
-                            for (document in documents){
-                                val documentReference = baseDeDatos.collection("alumnos").document(document.id)
-                                documentReference.delete()
-                                    .addOnSuccessListener {
-                                        user?.delete()
-                                            ?.addOnCompleteListener {task ->
-                                                if (task.isSuccessful){
-                                                    Toast.makeText(this, "Usuario Eliminado", Toast.LENGTH_SHORT).show()
-                                                    val intent = Intent(this,MainActivity::class.java)
-                                                    startActivity(intent)
-                                                }else{
-                                                    Toast.makeText(this, "No se pudo eliminar al usuario", Toast.LENGTH_SHORT).show()
+                        .addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                val documentReference =
+                                    baseDeDatos.collection("alumnos").document(document.id)
+                                documentReference.get().addOnSuccessListener { documentSnapshot ->
+                                    if (documentSnapshot.exists()) {
+                                        val imageUrl = documentSnapshot.getString("foto")
+                                        val storageReference = FirebaseStorage.getInstance()
+                                            .getReferenceFromUrl(imageUrl!!)
+                                        storageReference.delete().addOnSuccessListener {
+                                            documentReference.delete()
+                                                .addOnSuccessListener {
+
+                                                    user?.delete()
+                                                        ?.addOnCompleteListener { task ->
+                                                            if (task.isSuccessful) {
+                                                                Toast.makeText(
+                                                                    this,
+                                                                    "Usuario Eliminado",
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                                val intent = Intent(
+                                                                    this,
+                                                                    MainActivity::class.java
+                                                                )
+                                                                startActivity(intent)
+                                                                finish()
+                                                            } else {
+                                                                Toast.makeText(
+                                                                    this,
+                                                                    "No se pudo eliminar al usuario",
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                            }
+                                                        }
                                                 }
+                                                .addOnFailureListener { }
+                                        }
+                                            .addOnFailureListener { exception ->
+                                                // Manejar la falla al intentar eliminar la imagen
                                             }
                                     }
-                                    .addOnFailureListener {  }
+                                }
+
                             }
                         }
-
                 }
                 confirmarDialogo.setNegativeButton("Cancelar"){confirmarDialogo,which->
                     confirmarDialogo.cancel()
@@ -234,33 +261,54 @@ class EditarPerfil : AppCompatActivity() {
 
             }else if(tutor != null && alumno == null){
                 val confirmarDialogo = AlertDialog.Builder(this)
-                confirmarDialogo.setTitle("Eliminar Perfil")
+                confirmarDialogo.setTitle("Eliminar Usuario")
                 confirmarDialogo.setMessage(
                     """
-                   ¿Estas seguro de eliminar el perfil?
+                   ¿Estas seguro de eliminar el Usuario?
                 """.trimIndent()
                 )
                 confirmarDialogo.setPositiveButton("Confirmar"){ confirmarDialogo,which->
                 baseDeDatos.collection("tutores")
                     .whereEqualTo("correo", tutor.correo)
                     .get()
-                    .addOnSuccessListener {documents ->
-                        for (document in documents){
-                            val documentReference = baseDeDatos.collection("tutores").document(document.id)
-                            documentReference.delete()
-                                .addOnSuccessListener {
-                                    user?.delete()
-                                        ?.addOnCompleteListener {task ->
-                                            if (task.isSuccessful){
-                                                Toast.makeText(this, "Usuario Eliminado", Toast.LENGTH_SHORT).show()
-                                                val intent = Intent(this,MainActivity::class.java)
-                                                startActivity(intent)
-                                            }else{
-                                                Toast.makeText(this, "No se pudo eliminar al usuario", Toast.LENGTH_SHORT).show()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            val documentReference =
+                                baseDeDatos.collection("tutores").document(document.id)
+                            documentReference.get().addOnSuccessListener { documentSnapshot ->
+                                if (documentSnapshot.exists()) {
+                                    val imageUrl = documentSnapshot.getString("foto")
+                                    val storageReference = FirebaseStorage.getInstance()
+                                        .getReferenceFromUrl(imageUrl!!)
+                                    storageReference.delete().addOnSuccessListener {
+                                        documentReference.delete()
+                                            .addOnSuccessListener {
+                                                user?.delete()
+                                                    ?.addOnCompleteListener { task ->
+                                                        if (task.isSuccessful) {
+                                                            Toast.makeText(
+                                                                this,
+                                                                "Usuario Eliminado",
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                            val intent = Intent(
+                                                                this,
+                                                                MainActivity::class.java
+                                                            )
+                                                            startActivity(intent)
+                                                        } else {
+                                                            Toast.makeText(
+                                                                this,
+                                                                "No se pudo eliminar al usuario",
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        }
+                                                    }
                                             }
-                                        }
+                                            .addOnFailureListener { }
+                                    }.addOnFailureListener { }
                                 }
-                                .addOnFailureListener {  }
+                            }
                         }
                     }
                 }

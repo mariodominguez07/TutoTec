@@ -122,11 +122,7 @@ class RegistroAlumno : AppCompatActivity() {
                                 """.trimIndent()
                             )
                             confirmarDialogo.setPositiveButton("Confirmar") { confirmarDialogo, which ->
-                                baseDeDatos.collection("alumnos")
-                                    .whereEqualTo("nocontrol", noControl.editText?.text.toString())
-                                    .get().addOnSuccessListener {
                                         val noControl = noControl.editText?.text.toString()
-
                                         baseDeDatos.collection("alumnos")
                                             .whereEqualTo("nocontrol", noControl)
                                             .get()
@@ -198,7 +194,6 @@ class RegistroAlumno : AppCompatActivity() {
                                                     Toast.LENGTH_SHORT
                                                 ).show()
                                             }
-                                    }
                             }
                             confirmarDialogo.setNegativeButton("Editar") { confirmarDialogo, which ->
                                 confirmarDialogo.cancel()

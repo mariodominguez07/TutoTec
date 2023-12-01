@@ -114,36 +114,50 @@ class RegistroTutor : AppCompatActivity() {
                                 """.trimIndent()
                             )
                             confirmarDialogo.setPositiveButton("Confirmar") { confirmarDialogo, which ->
-                                if (email.toString().isNotEmpty() && psw.toString().isNotEmpty()) {
-                                    val tutor = hashMapOf(
-                                        "correo" to email.toString(),
-                                        "nombre" to nombre.editText?.text.toString(),
-                                        "apellido_pa" to apePaterno.editText?.text.toString(),
-                                        "apellido_ma" to apeMaterno.editText?.text.toString(),
-                                        "academia" to _academia,
-                                        "grupo" to grupo.editText?.text.toString(),
-                                        "foto" to downloadUrl
-                                    )
-                                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                                        email.toString(), psw.toString()
-                                    ).addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            // Usuario creado exitosamente, ahora guarda la información en Firestore
-                                            val user = task.result?.user
-                                            baseDeDatos.collection("tutores").document(email.toString()).set(tutor)
-                                                .addOnSuccessListener {
-                                                    val intent = Intent(this, LoginTutor::class.java)
-                                                    startActivity(intent)
+                                val _grupo = grupo.editText?.text.toString()
+                                baseDeDatos.collection("tutores")
+                                    .whereEqualTo("grupo", _grupo)
+                                    .get()
+                                    .addOnSuccessListener { querySnapshot ->
+                                        if (!querySnapshot.isEmpty) {
+                                            Toast.makeText(
+                                                this,
+                                                "El grupo ya ha sido asignado a un tutor",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }else{
+                                            if (email.toString().isNotEmpty() && psw.toString().isNotEmpty()) {
+                                                val tutor = hashMapOf(
+                                                    "correo" to email.toString(),
+                                                    "nombre" to nombre.editText?.text.toString(),
+                                                    "apellido_pa" to apePaterno.editText?.text.toString(),
+                                                    "apellido_ma" to apeMaterno.editText?.text.toString(),
+                                                    "academia" to _academia,
+                                                    "grupo" to grupo.editText?.text.toString(),
+                                                    "foto" to downloadUrl
+                                                )
+                                                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                                                    email.toString(), psw.toString()
+                                                ).addOnCompleteListener { task ->
+                                                    if (task.isSuccessful) {
+                                                        // Usuario creado exitosamente, ahora guarda la información en Firestore
+                                                        val user = task.result?.user
+                                                        baseDeDatos.collection("tutores").document(email.toString()).set(tutor)
+                                                            .addOnSuccessListener {
+                                                                val intent = Intent(this, LoginTutor::class.java)
+                                                                startActivity(intent)
+                                                            }
+                                                            .addOnFailureListener {
+                                                                Toast.makeText(this,"Error al guardar la informacion", Toast.LENGTH_SHORT).show()
+                                                            }
+                                                    } else {
+                                                        // Manejar errores al crear el usuario
+                                                        Toast.makeText(this,"Error al crear usuario", Toast.LENGTH_SHORT).show()
+                                                    }
                                                 }
-                                                .addOnFailureListener {
-                                                    Toast.makeText(this,"Error al guardar la informacion", Toast.LENGTH_SHORT).show()
-                                                }
-                                        } else {
-                                            // Manejar errores al crear el usuario
-                                            Toast.makeText(this,"Error al crear usuario", Toast.LENGTH_SHORT).show()
+                                            }
                                         }
                                     }
-                                }
 
                             }
                             confirmarDialogo.setNegativeButton("Editar") { confirmarDialogo, which ->
