@@ -51,7 +51,6 @@ class AdaptadorSolicitudesAlumno (private val listaSolicitudes: List<Solicitudes
 
             btnConfirmar.setOnClickListener {
                 clickListener.onConfirmarClick(solicitud)
-                btnConfirmar.isEnabled = false
             }
         }
     }

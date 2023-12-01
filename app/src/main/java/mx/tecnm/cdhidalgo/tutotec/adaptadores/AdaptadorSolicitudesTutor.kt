@@ -1,5 +1,6 @@
 package mx.tecnm.cdhidalgo.tutotec.adaptadores
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,9 @@ import com.google.firebase.ktx.Firebase
 import mx.tecnm.cdhidalgo.tutotec.R
 import mx.tecnm.cdhidalgo.tutotec.dataClass.Alumno
 import mx.tecnm.cdhidalgo.tutotec.dataClass.Solicitudes
-import mx.tecnm.cdhidalgo.tutotec.tutor
+import mx.tecnm.cdhidalgo.tutotec.dataClass.Tutor
 
-class AdaptadorSolicitudesTutor (private val listaSolicitudes: List<Solicitudes>, private val clickListener: (Solicitudes, action: String) -> Unit)
+class AdaptadorSolicitudesTutor (private val listaSolicitudes: List<Solicitudes>, private val tutor: Tutor, private val clickListener: (Solicitudes, action: String) -> Unit)
     : RecyclerView.Adapter<AdaptadorSolicitudesTutor.SolicitudViewHolder>(){
 
     override fun onCreateViewHolder(
@@ -48,29 +49,25 @@ class AdaptadorSolicitudesTutor (private val listaSolicitudes: List<Solicitudes>
             tema.text = solicitud.tema
             area.text = solicitud.area
             nombre.text = solicitud.nombre
-            baseDeDatos.collection("solicitudes")
-                .whereEqualTo("grupo", tutor.grupo)
-                .get().addOnSuccessListener { documents ->
-                    for (documento in documents) {
-                        val estatus = documento.getString("estatus")
+            val estatus = solicitud.estatus
 
-                        if (estatus == "Solicitud Finalizada" || estatus == "Solicitud Rechazada"){
-                            btnConfirmar.isEnabled = false
-                            btnRechazar.isEnabled = false
-                        }else{
-                            btnConfirmar.setOnClickListener {
-                                clickListener(solicitud,"confirmar asistencia")
-                                btnConfirmar.isEnabled = false
-                                btnRechazar.isEnabled = false
-                            }
-                            btnRechazar.setOnClickListener {
-                                clickListener(solicitud,"confirmar falta")
-                                btnConfirmar.isEnabled = false
-                                btnRechazar.isEnabled = false
-                            }
-                        }
-                    }
-                }
+            Log.d("AdaptadorSolicitudesTutor", "Estatus: $estatus")
+
+            if (estatus == "Solicitud Finalizada" || estatus == "Solicitud Rechazada"){
+                btnConfirmar.isEnabled = false
+                btnRechazar.isEnabled = false
+            }else{
+                btnConfirmar.isEnabled = true
+                btnRechazar.isEnabled = true
+            }
+
+            btnConfirmar.setOnClickListener {
+                clickListener(solicitud,"confirmar asistencia")
+
+            }
+            btnRechazar.setOnClickListener {
+                clickListener(solicitud,"confirmar falta")
+            }
         }
     }
 }

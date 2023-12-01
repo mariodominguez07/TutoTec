@@ -25,9 +25,9 @@ class SolicitudesTutor : AppCompatActivity() {
     private lateinit var btnRegresar: ImageButton
 
     private lateinit var rvSolicitudes: RecyclerView
-    private lateinit var adaptadorSolicitudes: AdaptadorSolicitudesAlumno
 
     private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_solicitudes_tutor)
@@ -50,7 +50,7 @@ class SolicitudesTutor : AppCompatActivity() {
                 }
 
                 rvSolicitudes.layoutManager = LinearLayoutManager(this)
-                val adaptadorSolicitudes = AdaptadorSolicitudesTutor(listaSolicitudes) { solicitud, action ->
+                val adaptadorSolicitudes = AdaptadorSolicitudesTutor(listaSolicitudes, tutor!!) { solicitud, action ->
                     when (action) {
                         "confirmar asistencia" -> mostrarDialogoAsistencia(solicitud)
                         "confirmar falta" -> mostrarDialogoFalta(solicitud)
@@ -97,7 +97,7 @@ class SolicitudesTutor : AppCompatActivity() {
             )
             baseDeDatos.collection("solicitudes")
                 .whereEqualTo("tema", solicitud.tema)
-                .whereEqualTo("nocontrol", alumno.nocontrol)
+                .whereEqualTo("nocontrol", solicitud.nocontrol)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -140,7 +140,7 @@ class SolicitudesTutor : AppCompatActivity() {
             )
             baseDeDatos.collection("solicitudes")
                 .whereEqualTo("tema", solicitud.tema)
-                .whereEqualTo("nocontrol", alumno.nocontrol)
+                .whereEqualTo("nocontrol", solicitud.nocontrol)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {

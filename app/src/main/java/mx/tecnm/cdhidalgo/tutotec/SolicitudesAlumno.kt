@@ -95,14 +95,18 @@ class SolicitudesAlumno : AppCompatActivity(), AdaptadorSolicitudesAlumno.Solici
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
-                        val documentReference = baseDeDatos.collection("solicitudes").document(document.id)
-                        documentReference.update(actualizar)
-                            .addOnSuccessListener {
-                                Toast.makeText(this, "Asistencia Confirmada", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(this, "La Asistencia no se confirmó", Toast.LENGTH_SHORT).show()
-                            }
+                        if (solicitud.estatus == "Solicitud Finalizada" || solicitud.estatus == "Solicitud Rechazada"){
+                            Toast.makeText(this, "Solicitud Finalizada", Toast.LENGTH_SHORT).show()
+                        }else{
+                            val documentReference = baseDeDatos.collection("solicitudes").document(document.id)
+                            documentReference.update(actualizar)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Asistencia Confirmada", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this, "La Asistencia no se confirmó", Toast.LENGTH_SHORT).show()
+                                }
+                        }
                     }
                 }
                 .addOnFailureListener {

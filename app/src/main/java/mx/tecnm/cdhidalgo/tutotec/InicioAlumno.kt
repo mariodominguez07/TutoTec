@@ -1,5 +1,6 @@
 package mx.tecnm.cdhidalgo.tutotec
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,6 +32,8 @@ class InicioAlumno : AppCompatActivity() {
 
     var nomT = ""
 
+    val EDITAR_PERFIL_REQUEST_CODE = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio_alumno)
@@ -51,6 +54,7 @@ class InicioAlumno : AppCompatActivity() {
         tutor = findViewById(R.id.tutor_carnet)
 
         val alumno = intent.getParcelableExtra<Alumno>("alumno")
+
 
         if (alumno != null){
             baseDeDatos.collection("tutores")
@@ -89,8 +93,11 @@ class InicioAlumno : AppCompatActivity() {
             popupMenu.show()
         }
 
-        editar.setOnClickListener {
 
+        editar.setOnClickListener {
+            val intent = Intent(this,EditarPerfil::class.java)
+            intent.putExtra("alumno", alumno)
+            startActivityForResult(intent, EDITAR_PERFIL_REQUEST_CODE)
         }
     }
 
@@ -128,4 +135,41 @@ class InicioAlumno : AppCompatActivity() {
             else -> return false
         }
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == EDITAR_PERFIL_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                val alumnoActualizado = data.getParcelableExtra<Alumno>("alumno_actualizado")
+                actualizarVistasConAlumnoActualizado(alumnoActualizado)
+            }
+        }
+    }
+
+    private fun actualizarVistasConAlumnoActualizado(alumno: Alumno?) {
+        if (alumno != null) {
+            val baseDeDatos = Firebase.firestore
+            baseDeDatos.collection("tutores")
+                .whereEqualTo("grupo", alumno.grupo)
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val nomtutor = document.toObject(Tutor::class.java)
+                        nomT = "${nomtutor.nombre} ${nomtutor.apellido_pa} ${nomtutor.apellido_ma}"
+
+                        tutor.text = nomT
+                    }
+                }
+                .addOnFailureListener {
+                    nomT = "No se encontro tutor"
+                    tutor.text = nomT
+                }
+
+            Glide.with(this).load(alumno.foto).circleCrop().into(foto)
+            nombreC.text = "${alumno.nombre} ${alumno.apellido_pa} ${alumno.apellido_ma}"
+            noControl.text = alumno.nocontrol
+            carrera.text = alumno.carrera
+            grupo.text = alumno.grupo
+        }
+    }
+
 }

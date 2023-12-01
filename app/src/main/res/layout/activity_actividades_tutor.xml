@@ -126,7 +126,6 @@
 
             </TableLayout>
             <TableLayout
-                android:id="@+id/tablaActividades_Tutor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="*">
@@ -183,8 +182,14 @@
                         android:gravity="center"
                         android:background="@drawable/border"/>
                 </TableRow>
-
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvActividades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/card_actividades"/>
             </TableLayout>
+
+
 
         </LinearLayout>
     </LinearLayout>

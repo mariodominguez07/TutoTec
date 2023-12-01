@@ -1,5 +1,6 @@
 package mx.tecnm.cdhidalgo.tutotec
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,6 +28,8 @@ class InicioTutor : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
 
+    val EDITAR_PERFIL_REQUEST_CODE = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio_tutor)
@@ -43,6 +46,8 @@ class InicioTutor : AppCompatActivity() {
         academia = findViewById(R.id.academia_tutor)
 
         val tutor = intent.getParcelableExtra<Tutor>("tutor")
+
+
 
         if (tutor != null){
             Glide.with(this).load(tutor.foto).circleCrop().into(foto)
@@ -63,7 +68,9 @@ class InicioTutor : AppCompatActivity() {
         }
 
         editar.setOnClickListener {
-
+            val intent = Intent(this,EditarPerfil::class.java)
+            intent.putExtra("tutor", tutor)
+            startActivityForResult(intent, EDITAR_PERFIL_REQUEST_CODE)
         }
 
     }
@@ -102,5 +109,23 @@ class InicioTutor : AppCompatActivity() {
             else -> return false
         }
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == EDITAR_PERFIL_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                val tutorActualizado = data.getParcelableExtra<Tutor>("tutor_actualizado")
+                actualizarVistasConTutorActualizado(tutorActualizado)
+            }
+        }
+    }
 
+    private fun actualizarVistasConTutorActualizado(tutor: Tutor?) {
+        if (tutor != null) {
+            Glide.with(this).load(tutor.foto).circleCrop().into(foto)
+            nombreC.text = "${tutor.nombre} ${tutor.apellido_pa} ${tutor.apellido_ma}"
+            correo.text = tutor.correo
+            academia.text = tutor.academia
+            grupo.text = tutor.grupo
+        }
+    }
 }

@@ -1,18 +1,21 @@
 package mx.tecnm.cdhidalgo.tutotec.adaptadores
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import mx.tecnm.cdhidalgo.tutotec.R
+import mx.tecnm.cdhidalgo.tutotec.dataClass.Actividades
 import mx.tecnm.cdhidalgo.tutotec.dataClass.Alumno
 
-class AdaptadorAlumnosActividad(private val listaAlumnos: List<Alumno>, private val clickListener: (Alumno, action: String) -> Unit)
+class AdaptadorAlumnosActividad(private val listaAlumnos: List<Alumno>, private val actividad: Actividades, private val clickListener: (Alumno, action: String) -> Unit)
     : RecyclerView.Adapter<AdaptadorAlumnosActividad.AlumnoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -39,30 +42,40 @@ class AdaptadorAlumnosActividad(private val listaAlumnos: List<Alumno>, private 
             val baseDeDatos = Firebase.firestore
             txtNumeroControl.text = alumno.nocontrol
             txtNombre.text = "${alumno.nombre} ${alumno.apellido_pa} ${alumno.apellido_ma}"
+
             baseDeDatos.collection("asistencias")
                 .whereEqualTo("nocontrol", alumno.nocontrol)
+                .whereEqualTo("actividad", actividad.titulo)
                 .get().addOnSuccessListener { documents ->
-                    for (documento in documents) {
-                        val asistencia = documento.getString("asistio")
+                    if (documents != null) {
+                        for (documento in documents) {
+                            val asistencia = documento.getString("asistio")
 
-                        if (asistencia == "Si" || asistencia == "No") {
-                            btnSiAsistio.isEnabled = false
-                            btnNoAsistio.isEnabled = false
-                        }else{
-                            btnSiAsistio.setOnClickListener {
-                                clickListener(alumno,"confirmar asistencia")
+                            if (asistencia == "Si" || asistencia == "No") {
                                 btnSiAsistio.isEnabled = false
                                 btnNoAsistio.isEnabled = false
-                            }
-                            btnNoAsistio.setOnClickListener {
-                                clickListener(alumno,"confirmar falta")
-                                btnSiAsistio.isEnabled = false
-                                btnNoAsistio.isEnabled = false
+                            } else {
+                                btnSiAsistio.isEnabled = true
+                                btnNoAsistio.isEnabled = true
                             }
                         }
+                    }else{
+                        btnSiAsistio.isEnabled = true
+                        btnNoAsistio.isEnabled = true
                     }
                 }
-                .addOnFailureListener { }
+                .addOnFailureListener {
+                    btnSiAsistio.isEnabled = true
+                    btnNoAsistio.isEnabled = true
+                }
+
+            btnSiAsistio.setOnClickListener {
+                clickListener(alumno, "confirmar asistencia")
+            }
+
+            btnNoAsistio.setOnClickListener {
+                clickListener(alumno, "confirmar falta")
+            }
         }
     }
 

@@ -122,40 +122,83 @@ class RegistroAlumno : AppCompatActivity() {
                                 """.trimIndent()
                             )
                             confirmarDialogo.setPositiveButton("Confirmar") { confirmarDialogo, which ->
-                                if (email.toString().isNotEmpty() && psw.toString().isNotEmpty()) {
-                                    val alumno = hashMapOf(
-                                        "correo" to email.toString(),
-                                        "nocontrol" to noControl.editText?.text.toString(),
-                                        "nombre" to nombre.editText?.text.toString(),
-                                        "apellido_pa" to apePaterno.editText?.text.toString(),
-                                        "apellido_ma" to apeMaterno.editText?.text.toString(),
-                                        "carrera" to _carrera,
-                                        "grupo" to grupo.editText?.text.toString(),
-                                        "foto" to downloadUrl
-                                    )
+                                baseDeDatos.collection("alumnos")
+                                    .whereEqualTo("nocontrol", noControl.editText?.text.toString())
+                                    .get().addOnSuccessListener {
+                                        val noControl = noControl.editText?.text.toString()
 
-                                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                                        email.toString(), psw.toString()
-                                    ).addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            // Usuario creado exitosamente, ahora guarda la información en Firestore
-                                            val user = task.result?.user
-                                            baseDeDatos.collection("alumnos").document(email.toString()).set(alumno)
-                                                .addOnSuccessListener {
-                                                    val intent = Intent(this, LoginAlumno::class.java)
-                                                    startActivity(intent)
+                                        baseDeDatos.collection("alumnos")
+                                            .whereEqualTo("nocontrol", noControl)
+                                            .get()
+                                            .addOnSuccessListener { querySnapshot ->
+                                                if (!querySnapshot.isEmpty) {
+                                                    // El número de control ya está registrado
+                                                    Toast.makeText(
+                                                        this,
+                                                        "El alumno ya ha sido registrado",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                } else {
+                                                    // El número de control no está registrado, puedes proceder con el registro
+                                                    if (email.toString()
+                                                            .isNotEmpty() && psw.toString()
+                                                            .isNotEmpty()
+                                                    ) {
+                                                        val alumno = hashMapOf(
+                                                            "correo" to email.toString(),
+                                                            "nocontrol" to noControl,
+                                                            "nombre" to nombre.editText?.text.toString(),
+                                                            "apellido_pa" to apePaterno.editText?.text.toString(),
+                                                            "apellido_ma" to apeMaterno.editText?.text.toString(),
+                                                            "carrera" to _carrera,
+                                                            "grupo" to grupo.editText?.text.toString(),
+                                                            "foto" to downloadUrl
+                                                        )
+
+                                                        FirebaseAuth.getInstance()
+                                                            .createUserWithEmailAndPassword(
+                                                                email.toString(), psw.toString()
+                                                            ).addOnCompleteListener { task ->
+                                                            if (task.isSuccessful) {
+                                                                // Usuario creado exitosamente, ahora guarda la información en Firestore
+                                                                val user = task.result?.user
+                                                                baseDeDatos.collection("alumnos")
+                                                                    .document(noControl).set(alumno)
+                                                                    .addOnSuccessListener {
+                                                                        val intent = Intent(
+                                                                            this,
+                                                                            LoginAlumno::class.java
+                                                                        )
+                                                                        startActivity(intent)
+                                                                    }
+                                                                    .addOnFailureListener {
+                                                                        Toast.makeText(
+                                                                            this,
+                                                                            "Error al guardar la información",
+                                                                            Toast.LENGTH_SHORT
+                                                                        ).show()
+                                                                    }
+                                                            } else {
+                                                                // Manejar errores al crear el usuario
+                                                                Toast.makeText(
+                                                                    this,
+                                                                    "Error al crear usuario",
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                            }
+                                                        }
+                                                    }
                                                 }
-                                                .addOnFailureListener {
-                                                    Toast.makeText(this,"Error al guardar la informacion",Toast.LENGTH_SHORT).show()
-                                                }
-                                        } else {
-                                            // Manejar errores al crear el usuario
-                                            Toast.makeText(this,"Error al crear usuario",Toast.LENGTH_SHORT).show()
-                                        }
+                                            }
+                                            .addOnFailureListener {
+                                                // Manejar errores en la consulta
+                                                Toast.makeText(
+                                                    this,
+                                                    "Error al consultar la base de datos",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
                                     }
-                                }
-
-
                             }
                             confirmarDialogo.setNegativeButton("Editar") { confirmarDialogo, which ->
                                 confirmarDialogo.cancel()

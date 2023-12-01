@@ -3,8 +3,10 @@ package mx.tecnm.cdhidalgo.tutotec
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +28,7 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import mx.tecnm.cdhidalgo.tutotec.adaptadores.AdaptadorAlumnosActividad
 import mx.tecnm.cdhidalgo.tutotec.dataClass.Actividades
 import mx.tecnm.cdhidalgo.tutotec.dataClass.Alumno
@@ -45,6 +48,9 @@ class HomeTutor : AppCompatActivity() {
 
     var _actividad : Actividades = Actividades()
 
+    private val storageReference = FirebaseStorage.getInstance().reference
+    private var selectedImageUri: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_tutor)
@@ -59,22 +65,7 @@ class HomeTutor : AppCompatActivity() {
         rvAlumnos = findViewById(R.id.rvAlumnos_actividades)
 
         val tutor = intent.getParcelableExtra<Tutor>("tutor")
-
-
-        val listaAlumnos = mutableListOf<Alumno>()
-        baseDeDatos.collection("alumnos").whereEqualTo("grupo", tutor?.grupo)
-            .get().addOnSuccessListener { result ->
-                for (documento in result){
-                    val alumno = documento.toObject(Alumno::class.java)
-
-                    listaAlumnos.add(alumno)
-                }
-
-            }
-            .addOnFailureListener{
-                Toast.makeText(this,"No se encontraron Alumnos",Toast.LENGTH_SHORT).show()
-            }
-
+        
         val nomT = "${tutor?.nombre} ${tutor?.apellido_pa} ${tutor?.apellido_ma}"
 
         val listaActividades = mutableListOf<Actividades>()
@@ -113,15 +104,29 @@ class HomeTutor : AppCompatActivity() {
             .addOnFailureListener{
                 Toast.makeText(this,"No se encontraron Actividades",Toast.LENGTH_SHORT).show()
             }
+        val listaAlumnos = mutableListOf<Alumno>()
+        baseDeDatos.collection("alumnos").whereEqualTo("grupo", tutor?.grupo)
+            .get().addOnSuccessListener { result ->
+                for (documento in result){
+                    val alumno = documento.toObject(Alumno::class.java)
 
-            rvAlumnos.layoutManager = LinearLayoutManager(this)
-            adaptadorAlumnos = AdaptadorAlumnosActividad(listaAlumnos) { alumno, action ->
-                when (action) {
-                    "confirmar asistencia" -> mostrarDialogoAsistencia(alumno)
-                    "confirmar falta" -> mostrarDialogoFalta(alumno)
+                    listaAlumnos.add(alumno)
                 }
+                rvAlumnos.layoutManager = LinearLayoutManager(this)
+                adaptadorAlumnos = AdaptadorAlumnosActividad(listaAlumnos,_actividad) { alumno, action ->
+                    when (action) {
+                        "confirmar asistencia" -> mostrarDialogoAsistencia(alumno)
+                        "confirmar falta" -> mostrarDialogoFalta(alumno)
+                    }
+                }
+                rvAlumnos.adapter = adaptadorAlumnos
+
+
             }
-        rvAlumnos.adapter = adaptadorAlumnos
+            .addOnFailureListener{
+                Toast.makeText(this,"No se encontraron Alumnos",Toast.LENGTH_SHORT).show()
+            }
+
 
         menu.setOnClickListener {view->
             val popupMenu = PopupMenu(this, view)
@@ -131,6 +136,56 @@ class HomeTutor : AppCompatActivity() {
             popupMenu.setOnMenuItemClickListener { item -> onMenuItemClick(item) }
 
             popupMenu.show()
+        }
+
+        btnSubirEvidencia.setOnClickListener {
+            if (selectedImageUri != null) {
+                // Sube la imagen a Firebase Storage
+                val storageRef = storageReference.child("evidencias/${selectedImageUri?.lastPathSegment}")
+                storageRef.putFile(selectedImageUri!!)
+                    .addOnSuccessListener { taskSnapshot ->
+                        // La imagen se ha subido con éxito, obtén la URL de descarga
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            val downloadUrl = uri.toString()
+                            val confirmarDialogo = AlertDialog.Builder(this)
+                            confirmarDialogo.setTitle("Subir Evidencia")
+                            confirmarDialogo.setMessage(
+                                """
+                                    ¿Desea subir la evidencia?
+                                    """.trimIndent()
+                            )
+                            confirmarDialogo.setPositiveButton("Confirmar"){ confirmarDialogo,which->
+                                val actualizar = hashMapOf<String, Any>(
+                                    "evidencia" to downloadUrl
+                                )
+                                baseDeDatos.collection("actividades")
+                                    .whereEqualTo("titulo", _actividad.titulo)
+                                    .get()
+                                    .addOnSuccessListener { documents ->
+                                        for (document in documents) {
+                                            val documentReference = baseDeDatos.collection("actividades").document(document.id)
+                                            documentReference.update(actualizar)
+                                                .addOnSuccessListener {
+                                                    Toast.makeText(this, "Evidencia subida", Toast.LENGTH_SHORT).show()
+                                                }
+                                                .addOnFailureListener {
+                                                    Toast.makeText(this, "La Evidencia no se pudo subir", Toast.LENGTH_SHORT).show()
+                                                }
+                                        }
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(this, "Error al obtener el documento", Toast.LENGTH_SHORT).show()
+                                    }
+                            }
+
+                            confirmarDialogo.setNegativeButton("Cancelar") { confirmarDialogo, _ ->
+                                confirmarDialogo.cancel()
+                            }
+
+                            confirmarDialogo.show()
+                        }
+                    }
+            }
         }
 
     }
@@ -164,13 +219,30 @@ class HomeTutor : AppCompatActivity() {
                     "nocontrol" to alumno.nocontrol.toString(),
                     "asistio" to _siAsistio
                 )
-                baseDeDatos.collection("asistencias").add(actividad)
-                    .addOnSuccessListener {
-                        Toast.makeText(this,"Asistencia Confirmada", Toast.LENGTH_SHORT).show()
+                baseDeDatos.collection("asistencias").whereEqualTo("actividad",_actividad.titulo)
+                    .whereEqualTo("nocontrol",alumno.nocontrol)
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        if (!querySnapshot.isEmpty) {
+                            Toast.makeText(this, "Asistencia Registrada", Toast.LENGTH_SHORT).show()
+                        } else {
+                            baseDeDatos.collection("asistencias").add(actividad)
+                                .addOnSuccessListener {
+                                    Toast.makeText(
+                                        this,
+                                        "Asistencia Confirmada",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
 
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this,"La Asistencia no se confirmo", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        this,
+                                        "La Asistencia no se confirmo",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        }
                     }
             }
 
@@ -209,12 +281,27 @@ class HomeTutor : AppCompatActivity() {
                     "nocontrol" to alumno.nocontrol.toString(),
                     "asistio" to _noAsistio
                 )
-                baseDeDatos.collection("asistencias").add(actividad)
-                    .addOnSuccessListener {
-                        Toast.makeText(this,"Falta Confirmada", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this,"La Falta no se confirmo", Toast.LENGTH_SHORT).show()
+                baseDeDatos.collection("asistencias").whereEqualTo("actividad",_actividad.titulo)
+                    .whereEqualTo("nocontrol",alumno.nocontrol)
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        if (!querySnapshot.isEmpty) {
+                            Toast.makeText(this, "Asistencia Registrada", Toast.LENGTH_SHORT).show()
+                        } else {
+                            baseDeDatos.collection("asistencias").add(actividad)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Falta Confirmada", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        this,
+                                        "La Falta no se confirmo",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                }
+                        }
                     }
             }
 
@@ -224,6 +311,8 @@ class HomeTutor : AppCompatActivity() {
         }
         confirmarDialogo.show()
     }
+
+
     private fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.carnet_menu_tutor -> {
@@ -256,6 +345,16 @@ class HomeTutor : AppCompatActivity() {
             }
 
             else -> return false
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            data?.data?.let { uri ->
+                // Almacena la URI seleccionada
+                selectedImageUri = uri
+            }
         }
     }
 }
